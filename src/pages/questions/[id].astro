@@ -2,6 +2,7 @@
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import EvidenceList from '../../components/EvidenceList.astro';
+import QuestionTimelineDetail from '../../components/QuestionTimelineDetail.astro';
 import KindBadge from '../../components/KindBadge.astro';
 import TallyBadges from '../../components/TallyBadges.astro';
 import { AREAS } from '../../content.config';
@@ -29,6 +30,16 @@ const comparisons = g.recorded.filter((e) => e.question.id === q.id && e.rival);
   <p class="lede">{q.data.summary}</p>
 
   <div class="prose"><Content /></div>
+
+  <QuestionTimelineDetail
+    evidence={g.forQuestion(q.id).map((e) => ({
+      paper: e.paper,
+      claim: e.claim,
+      relation: e.relation,
+      finding: e.finding,
+      year: e.paper.data.year,
+    }))}
+  />
 
   <h2>Candidate answers</h2>
   <div class="table-scroll">
