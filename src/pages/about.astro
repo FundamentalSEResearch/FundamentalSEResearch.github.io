@@ -1,5 +1,22 @@
 ---
 import Base from '../layouts/Base.astro';
+import { LEVELS, PROCESS_TYPES, RELATIONS } from '../content.config';
+import { loadGraph, paperLink, shortCite, url } from '../lib/graph';
+
+const g = await loadGraph();
+const cite = (id: string) => g.paper(id);
+const reading = [
+  ['sjoberg-et-al-2008', 'What a theory consists of, levels of theory, and criteria for evaluating theories.'],
+  ['hannay-sjoberg-dyba-2007', 'How SE experiments use theory, and how rarely they do.'],
+  ['gregor-2006', 'Five types of theory, distinguished by purpose.'],
+  ['markus-robey-1988', 'Variance and process structures in theory.'],
+  ['van-de-ven-poole-1995', 'The four types of process theory.'],
+  ['ralph-2015-process-theories', 'Developing and evaluating process theories in SE; comparing rival theories.'],
+  ['ralph-2019', 'Methodological guidelines for process theories and taxonomies.'],
+  ['perry-2011', 'Software engineering as design (theory D) plus empirical evaluation (theory E).'],
+  ['perry-2013', 'A model calculus for composing theories of design and evaluation.'],
+  ['erbas-erbas-2015', 'A proposed general theory of SE built on modules and transactions.'],
+] as const;
 ---
 <Base title="About">
   <div class="prose">
@@ -8,7 +25,6 @@ import Base from '../layouts/Base.astro';
       Software Engineering Theories is an open catalog of the fundamental scientific questions in software engineering,
       the laws and theories proposed to answer them, and the published evidence for and against each.
     </p>
-
     <h2>How it is organized</h2>
     <p>
       The catalog is organized by <strong>question</strong> first. Questions last longer than the answers proposed for them, several
@@ -23,7 +39,7 @@ import Base from '../layouts/Base.astro';
       </div>
       <div class="card">
         <h3><span class="badge theory">theory</span> Explains <em>why</em> it happens</h3>
-        <p>Concepts, relationships, and a mechanism. Example: Socio-Technical Congruence explains mirroring through the cost of coordinating across technical dependencies.</p>
+        <p>Constructs, propositions, and an explanation. Example: Socio-Technical Congruence explains mirroring through the cost of coordinating across technical dependencies.</p>
       </div>
     </div>
     <p>
@@ -34,17 +50,130 @@ import Base from '../layouts/Base.astro';
     <p>
       The strongest knowledge combines a regularity that has been confirmed with a mechanism that has been tested. Theories can declare which laws they
       <em>explain</em>, and each such link must cite the paper that makes it. Laws with no sourced explanation are flagged
-      as gaps on the <a href="../matrix/">evidence map</a>.
+      as gaps on the <a href={url('/matrix/')}>evidence map</a>.
     </p>
+
+    <h2 id="anatomy">What every claim states</h2>
+    <p>
+      Following <a href={paperLink(cite('sjoberg-et-al-2008'))}>{shortCite(cite('sjoberg-et-al-2008'))}</a>, a theory is made of four parts, and the catalog records each one explicitly:
+    </p>
+    <ul>
+      <li><strong>Constructs</strong>: the concepts the theory uses, each with a definition.</li>
+      <li><strong>Propositions</strong>: testable statements relating the constructs. Each has an id, and evidence can say which propositions it bears on, so a theory can be supported on one proposition and refuted on another.</li>
+      <li><strong>Explanation</strong>: why the propositions should hold. This is the “Explanation” section of every theory page.</li>
+      <li><strong>Scope</strong>: the actors, technologies, activities, and systems the theory is meant to cover.</li>
+    </ul>
+    <p>
+      Laws state propositions and a scope too, but no constructs or explanation. Lehman's laws, for example, are several propositions with very different evidence, so they are recorded and evaluated one by one.
+    </p>
+
+    <h2 id="purpose">Purpose</h2>
+    <p>
+      <a href={paperLink(cite('gregor-2006'))}>{shortCite(cite('gregor-2006'))}</a> distinguishes theories by what they are for. The catalog uses four of her five types and moves the fifth into methods:
+    </p>
+    <ul>
+      <li><strong>Description</strong> (laws): says what is, for example a taxonomy or a descriptive regularity.</li>
+      <li><strong>Prediction</strong> (laws): says what will happen, without saying why.</li>
+      <li><strong>Explanation</strong> (theories): says why or how, without precise predictions.</li>
+      <li><strong>Explanation & prediction</strong> (theories): says why and what will happen.</li>
+      <li><strong>Design & action</strong> → <a href={url('/methods/')}>engineering methods</a>: says how to do something. Prescriptions are kept separate from laws and theories, as described below.</li>
+    </ul>
+
+    <h2 id="structure">Variance and process theories</h2>
+    <p>
+      A <strong>variance theory</strong> explains differences in an outcome through relationships between variables: more congruence, faster tasks.
+      A <strong>process theory</strong> explains how an entity changes and develops over time, through activities, actors, and events
+      (<a href={paperLink(cite('markus-robey-1988'))}>{shortCite(cite('markus-robey-1988'))}</a>;
+      <a href={paperLink(cite('ralph-2015-process-theories'))}>{shortCite(cite('ralph-2015-process-theories'))}</a>).
+      Process theories come in four types (<a href={paperLink(cite('van-de-ven-poole-1995'))}>{shortCite(cite('van-de-ven-poole-1995'))}</a>):
+    </p>
+    <ul>
+      <li><strong>{PROCESS_TYPES.teleological}</strong>: an agent pursues goals and chooses its own actions.</li>
+      <li><strong>{PROCESS_TYPES.dialectic}</strong>: change results from conflict between opposing entities or forces.</li>
+      <li><strong>{PROCESS_TYPES.evolutionary}</strong>: a population changes through variation, selection, and retention.</li>
+      <li><strong>{PROCESS_TYPES.lifecycle}</strong>: an entity passes through a prescribed sequence of stages.</li>
+    </ul>
+    <p>
+      The distinction matters for evidence. Process theories have no independent and dependent variables, so controlled experiments and
+      null-hypothesis tests do not fit them. They are better tested with observational studies and by comparing rival theories.
+      Ralph also argues that lifecycle theories suit human activity poorly, because people, unlike nitrogen, can decide to do things in a different order.
+    </p>
+
+    <h2 id="level">Level</h2>
+    <p>
+      <a href={paperLink(cite('sjoberg-et-al-2008'))}>{shortCite(cite('sjoberg-et-al-2008'))}</a> describe three levels of theory:
+    </p>
+    <ul>
+      <li><strong>{LEVELS['working-relationship']}</strong>: concrete, close to observations, narrow scope.</li>
+      <li><strong>{LEVELS['middle-range']}</strong>: moderately abstract, with a limited scope that can be tested.</li>
+      <li><strong>{LEVELS.general}</strong>: abstract and broad, aiming to cover software engineering (or design, or coordination) as a whole.</li>
+    </ul>
+    <p>Most useful SE theories today are middle-range. General theories of software engineering have been proposed but rarely tested; see “Not included” below.</p>
+
+    <h2 id="adoption">Where theories come from</h2>
+    <p>
+      <a href={paperLink(cite('hannay-sjoberg-dyba-2007'))}>{shortCite(cite('hannay-sjoberg-dyba-2007'))}</a> reviewed 103 software engineering experiments and found that only 24 used theory at all.
+      The 40 theories they used drew on other disciplines more than SE research in general does, and a third were proposed by the experiments' own authors.
+      Each law and theory here records its home discipline and whether it was <strong>developed in SE</strong>, <strong>borrowed as-is</strong>, or
+      <strong>adapted for SE</strong>.
+    </p>
+
+    <h2 id="evidence">How papers use claims</h2>
+    <p>Each evidence link records how the paper uses the law or theory, extending Hannay et al.'s categories:</p>
+    <ul>
+      {Object.entries(RELATIONS).map(([k, v]) => <li><strong>{k}</strong>: {v}.</li>)}
+    </ul>
+    <p>
+      A post-hoc explanation is recorded but does not count as support: a theory invoked to explain results after the fact has not been put at risk.
+      A comparison is recorded once, and the rival automatically receives the opposite finding.
+      Every evidence link also records its context: the setting (industrial, open source, laboratory, mixed, simulated), the participants, and whether the study was about software at all.
+    </p>
+
+    <h2 id="evaluation">How claims are evaluated</h2>
+    <p>
+      Sjøberg et al. propose six criteria: testability, empirical support, explanatory power, parsimony, generality, and utility.
+      The catalog computes only the two that follow from the evidence: <strong>empirical support</strong> (independent studies and their findings)
+      and <strong>generality</strong> (the settings, participants, domains, and methods the claim has been tested with). The other four are judgments,
+      so they are discussed in each page's text rather than scored.
+    </p>
+    <p>
+      Where studies have tested rival answers against each other, question pages show the comparison. Following
+      <a href={paperLink(cite('ralph-2015-process-theories'))}>{shortCite(cite('ralph-2015-process-theories'))}</a>, a head-to-head test is usually more informative than testing one theory against a null hypothesis, which any plausible theory will beat.
+    </p>
+
+    <h2 id="design-and-evaluation">Design and evaluation</h2>
+    <p>
+      <a href={paperLink(cite('perry-2011'))}>{shortCite(cite('perry-2011'))}</a> describes software engineering as two activities: <em>design</em>
+      (building models of the world and injecting them into it) and <em>empirical evaluation</em> (testing those models against reality). The
+      catalog's methods follow the same split. <a href={url('/methods/')}>Research methods</a> produce evidence; engineering methods are designs
+      derived from a law or theory, and each one names the claim it derives from.
+    </p>
+
+    <h2 id="not-included">Not included</h2>
+    <ul>
+      <li>
+        <strong>Methods presented as theories.</strong> A method such as Scrum prescribes how development <em>should</em> happen; a theory explains how it <em>does</em> happen.
+        Building theories from methods over-rationalizes practice (<a href={paperLink(cite('ralph-2019'))}>{shortCite(cite('ralph-2019'))}</a>), so methods appear only as engineering methods.
+      </li>
+      <li>
+        <strong>Normative and purely formal “laws.”</strong> Perry distinguishes theories based on observation from theories based on decisions or on judgments of what is good.
+        Only claims that can be checked against observations are catalogued; collections of laws derived axiomatically or stated as principles are left out unless someone tests them.
+      </li>
+      <li>
+        <strong>Untested general theories.</strong> Proposals such as
+        <a href={paperLink(cite('erbas-erbas-2015'))}>{shortCite(cite('erbas-erbas-2015'))}</a>'s transaction-based theory of software engineering are listed under further reading. They will be catalogued
+        once a paper other than the proposer's tests them.
+      </li>
+    </ul>
 
     <h2>Data model</h2>
     <ul>
       <li><strong>Questions</strong>: fundamental, empirically answerable problems.</li>
-      <li><strong>Laws</strong>: claimed regularities (what happens).</li>
-      <li><strong>Theories</strong>: proposed explanations (why it happens), optionally linked to the laws they explain.</li>
+      <li><strong>Laws</strong>: claimed regularities (what happens), stated as propositions with a scope.</li>
+      <li><strong>Theories</strong>: proposed explanations (why it happens), with constructs, propositions, an explanation, and a scope, optionally linked to the laws they explain.</li>
       <li><strong>Methods</strong>: research methods that produce evidence, and engineering methods derived from laws or theories.</li>
       <li><strong>Papers</strong>: published works. Each paper carries <em>evidence links</em> of the form
-        “this paper <em>tests</em> law/theory X on question Q using method M, and the finding <em>supports</em> it.”</li>
+        “this paper <em>tests</em> propositions of law/theory X on question Q using method M in context C, and the finding <em>supports</em> it.”</li>
     </ul>
     <p>Question, law, and theory pages are generated from those links, so nothing is attached to a question without a paper behind it.</p>
 
@@ -52,13 +181,23 @@ import Base from '../layouts/Base.astro';
     <ul>
       <li>Every paper must have a DOI or a stable URL. DOIs are checked against Crossref.</li>
       <li>Every question must be addressed by at least one paper.</li>
-      <li>Every law and theory must be tested, applied, or reviewed by at least one paper beyond the one that proposed it.</li>
+      <li>Every law and theory must be tested, applied, reviewed, modified, or compared by at least one paper beyond the one that proposed it. Post-hoc explanations do not count.</li>
+      <li>Every theory must define its constructs, state its propositions and scope, and give an explanation.</li>
+      <li>Evidence about a claim with several propositions must say which propositions it addresses.</li>
       <li>Every “theory explains law” link must cite a paper.</li>
-      <li>Every evidence link states the method used and summarizes the finding <em>in our own words</em>.</li>
+      <li>Every evidence link states the method used, its context, and summarizes the finding <em>in our own words</em>.</li>
       <li>Findings are recorded as <span class="badge supports">supports</span> <span class="badge mixed">mixed</span>
         <span class="badge refutes">refutes</span>, and disconfirming evidence is just as welcome as confirming evidence.</li>
     </ul>
     <p>The site build fails if any rule is broken.</p>
+
+    <h2 id="reading">Further reading on theory in software engineering</h2>
+    <ul>
+      {reading.map(([id, why]) => {
+        const p = cite(id);
+        return <li><a href={paperLink(p)}>{shortCite(p)}</a>, <em>{p.data.title}</em>. {why}</li>;
+      })}
+    </ul>
 
     <h2>Contributing</h2>
     <p>

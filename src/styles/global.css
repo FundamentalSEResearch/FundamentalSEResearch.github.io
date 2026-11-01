@@ -128,3 +128,13 @@ tr:last-child td { border-bottom: none; }
 .badge.theory { background: var(--text); color: var(--bg); }
 .kind-intro { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin: 20px 0; }
 .kind-intro .card p { margin: 0; }
+
+.badge.post-hoc { background: var(--bg); color: var(--muted); border: 1px dashed var(--border); }
+.badge.prop { background: var(--bg); color: var(--muted); border: 1px solid var(--border); font-weight: 500; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.badge.tag { background: var(--bg); color: var(--muted); border: 1px solid var(--border); font-weight: 500; }
+.facts { display: grid; grid-template-columns: max-content 1fr; gap: 6px 18px; margin: 18px 0; font-size: 0.95rem; }
+.facts dt { color: var(--muted); }
+.facts dt a { color: inherit; text-decoration: underline dotted; }
+.facts dd { margin: 0; }
+@media (max-width: 520px) { .facts { grid-template-columns: 1fr; gap: 0; } .facts dd { margin-bottom: 8px; } }
+tbody th { font-weight: 600; color: var(--muted); white-space: nowrap; }

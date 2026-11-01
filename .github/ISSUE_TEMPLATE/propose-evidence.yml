@@ -1,5 +1,5 @@
 name: Propose evidence
-description: Suggest a paper that tests, applies, or reviews a law or theory on a question
+description: Suggest a paper that tests, applies, reviews, modifies, or compares a law or theory on a question
 labels: [evidence]
 body:
   - type: input
@@ -19,14 +19,38 @@ body:
   - type: input
     id: theory
     attributes:
-      label: Which law or theory does it test, apply, or review?
+      label: Which law or theory does it address?
+      description: If the claim has several propositions, say which ones the paper addresses.
     validations:
       required: true
+  - type: dropdown
+    id: relation
+    attributes:
+      label: How does the paper use it?
+      options:
+        - tests (tests it empirically)
+        - applies (applies it and observes the outcome)
+        - reviews (synthesizes other studies)
+        - modifies (refines or extends it)
+        - compares (tests it against a rival)
+        - post-hoc (explains results after the fact)
+        - proposes (first proposes it)
+    validations:
+      required: true
+  - type: input
+    id: rival
+    attributes:
+      label: Rival law or theory (only for comparisons)
+  - type: input
+    id: context
+    attributes:
+      label: Context
+      description: Setting (industrial, open source, lab, simulation), participants (professionals, students), and whether the study is about software.
   - type: dropdown
     id: finding
     attributes:
       label: Finding
-      options: [supports, mixed, refutes, proposes]
+      options: [supports, mixed, refutes, n/a (proposes or post-hoc)]
     validations:
       required: true
   - type: textarea

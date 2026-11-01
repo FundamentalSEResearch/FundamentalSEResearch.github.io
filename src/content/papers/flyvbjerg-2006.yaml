@@ -10,4 +10,5 @@ evidence:
     relation: applies
     finding: supports
     methods: [reference-class-forecasting]
+    context: { setting: industrial, participants: professionals, domain: other }
     note: Attributes systematic cost and schedule overruns in large projects to optimism bias (the planning fallacy) and strategic misrepresentation, and proposes reference class forecasting, an outside-view method, as a corrective.

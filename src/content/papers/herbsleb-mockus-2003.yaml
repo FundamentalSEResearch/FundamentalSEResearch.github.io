@@ -10,4 +10,6 @@ evidence:
     relation: applies
     finding: supports
     methods: [mining-software-repositories, survey]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [boundary-cost]
     note: Using change-management data and surveys, found that work spanning multiple sites took substantially longer than same-site work, and that the delay was associated with more people being involved and weaker communication across sites.

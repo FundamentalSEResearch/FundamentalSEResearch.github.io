@@ -1,12 +1,18 @@
 ---
 name: Conway's Law
 aka: [Mirroring hypothesis]
-discipline: Software engineering / Organization science
+discipline: software-engineering
+adoption: native
+purpose: prediction
 summary: Organizations design systems whose structure mirrors their own communication structure.
 origin:
   by: Melvin Conway
   year: 1968
   paper: conway-1968
+propositions:
+  - id: mirroring
+    statement: The structure of a system corresponds to the communication structure of the organization that designs it.
+scope: Organizations of any size (teams, departments, firms) designing a system; studied mostly for software products and the module structure of their code.
 ---
 
 ## Statement

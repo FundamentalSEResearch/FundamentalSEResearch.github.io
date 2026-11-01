@@ -1,10 +1,16 @@
 ---
 name: Brooks' Law
-discipline: Software engineering
+discipline: software-engineering
+adoption: native
+purpose: prediction
 summary: Adding manpower to a late software project makes it later.
 origin:
   by: Fred Brooks, The Mythical Man-Month (Addison-Wesley)
   year: 1975
+propositions:
+  - id: adding-people-delays
+    statement: Adding people to a software project that is already late delays its completion further.
+scope: Software projects that are already behind schedule, where new staff need to be trained and the remaining work cannot be fully partitioned.
 ---
 
 ## Statement

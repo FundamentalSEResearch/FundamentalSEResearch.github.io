@@ -10,4 +10,6 @@ evidence:
     relation: tests
     finding: supports
     methods: [field-experiment]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [assimilation]
     note: In a randomized field experiment with professional software developers, information that should have been irrelevant to the work, including anchor-like cues, measurably shifted their effort estimates.

@@ -8,6 +8,16 @@ evidence:
   - question: why-software-gets-harder-to-change
     law: lehmans-laws
     relation: reviews
+    finding: supports
+    methods: [systematic-literature-review]
+    context: { setting: mixed, participants: mixed, domain: software }
+    propositions: [continuing-change, continuing-growth]
+    note: Across decades of studies, the laws of continuing change and continuing growth are widely confirmed, in both industrial and open source systems.
+  - question: why-software-gets-harder-to-change
+    law: lehmans-laws
+    relation: reviews
     finding: mixed
     methods: [systematic-literature-review]
-    note: Across decades of studies, the laws of continuing change and continuing growth are widely confirmed, while others, such as declining growth, often fail to hold, particularly in open source systems.
+    context: { setting: mixed, participants: mixed, domain: software }
+    propositions: [declining-growth]
+    note: The prediction that growth slows as systems get larger often fails to hold, particularly in open source systems, though some systems do follow it.

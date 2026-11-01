@@ -10,4 +10,6 @@ evidence:
     relation: tests
     finding: supports
     methods: [mining-software-repositories]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [increasing-complexity]
     note: Change-management data from a long-lived telephone switching system show statistical evidence of code decay, with changes becoming harder to make over time, consistent with the law of increasing complexity.

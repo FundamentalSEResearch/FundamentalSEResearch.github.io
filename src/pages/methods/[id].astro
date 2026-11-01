@@ -2,7 +2,7 @@
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import EvidenceList from '../../components/EvidenceList.astro';
-import { loadGraph, paperLink, shortCite } from '../../lib/graph';
+import { claimUrl, kindOf, loadGraph, paperLink, shortCite } from '../../lib/graph';
 
 export async function getStaticPaths() {
   const g = await loadGraph();
@@ -14,11 +14,18 @@ const m = g.methods.find((x) => x.id === Astro.props.id)!;
 const { Content } = await render(m);
 const ev = g.forMethod(m.id);
 const refs = m.data.references.map((r) => g.paper(r.id));
+const derived = g.derivedClaims(m);
 ---
 <Base title={m.data.name} description={m.data.summary}>
   <p class="eyebrow">{m.data.kind} method</p>
   <h1>{m.data.name}</h1>
   <p class="lede">{m.data.summary}</p>
+  {derived.length > 0 && (
+    <p>
+      <strong>Derived from:</strong>
+      {derived.map((c, i) => <>{i > 0 && '; '}<a href={claimUrl(c)}>{c.data.name}</a> <span class="muted">({kindOf(c)})</span></>)}
+    </p>
+  )}
   <div class="prose"><Content /></div>
   <p>
     <strong>Methodological reference{refs.length > 1 ? 's' : ''}:</strong>

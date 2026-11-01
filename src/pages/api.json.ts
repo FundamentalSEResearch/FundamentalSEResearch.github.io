@@ -16,12 +16,21 @@ export const GET: APIRoute = async () => {
     questions: g.questions.map((q) => ({ id: q.id, ...q.data })),
     laws: g.laws.map(claimJson),
     theories: g.theories.map(claimJson),
-    methods: g.methods.map((m) => ({ id: m.id, ...m.data, references: m.data.references.map((r) => r.id) })),
+    methods: g.methods.map((m) => ({
+      id: m.id,
+      ...m.data,
+      references: m.data.references.map((r) => r.id),
+      derivedFrom: g.derivedClaims(m).map((c) => ({ [kindOf(c)]: c.id })),
+    })),
     papers: g.papers.map((p) => ({ id: p.id, ...p.data, evidence: undefined })),
-    evidence: g.evidence.map((e) => ({
+    // As recorded: a `compares` entry is listed once, with its `rival`; the rival's finding is the opposite.
+    evidence: g.recorded.map((e) => ({
       paper: e.paper.id,
       question: e.question.id,
       [kindOf(e.claim)]: e.claim.id,
+      ...(e.rival && { rival: e.rival.id }),
+      propositions: e.propositions,
+      context: e.context,
       methods: e.methods.map((m) => m.id),
       relation: e.relation,
       finding: e.finding,

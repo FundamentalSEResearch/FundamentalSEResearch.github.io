@@ -10,4 +10,5 @@ evidence:
     relation: tests
     finding: mixed
     methods: [simulation]
+    context: { setting: simulated, participants: none, domain: software }
     note: A system-dynamics model of a software project suggests that adding staff to a late project reliably increases cost, but does not always make the project finish later; the schedule effect depends on when and how people are added.

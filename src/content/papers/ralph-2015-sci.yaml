@@ -1,0 +1,12 @@
+title: The Sensemaking-Coevolution-Implementation Theory of Software Design
+authors: ["Ralph, P."]
+year: 2015
+venue: Science of Computer Programming 101
+type: journal
+doi: 10.1016/j.scico.2014.11.007
+evidence:
+  - question: how-teams-design-software
+    theory: sensemaking-coevolution-implementation
+    relation: proposes
+    finding: n/a
+    note: Formulates a process theory in which a design team builds software by alternating among sensemaking, coevolution, and implementation, grounding each concept in prior design and software engineering literature.

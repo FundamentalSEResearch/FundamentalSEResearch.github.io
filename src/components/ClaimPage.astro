@@ -4,7 +4,10 @@ import Base from '../layouts/Base.astro';
 import EvidenceList from './EvidenceList.astro';
 import KindBadge from './KindBadge.astro';
 import TallyBadges from './TallyBadges.astro';
-import { claimUrl, groupBy, kindOf, loadGraph, paperLink, shortCite, tally, url, type Claim } from '../lib/graph';
+import { ADOPTION, DISCIPLINES, DOMAINS, LEVELS, PARTICIPANTS, PROCESS_TYPES, PURPOSES, SETTINGS, STRUCTURES } from '../content.config';
+import {
+  claimUrl, evaluate, forProposition, groupBy, kindOf, loadGraph, paperLink, shortCite, tally, url, type Claim,
+} from '../lib/graph';
 
 interface Props {
   claim: Claim;
@@ -15,19 +18,40 @@ const { Content } = await render(claim);
 const ev = g.forClaim(claim);
 const origin = claim.data.origin.paper && g.paper(claim.data.origin.paper.id);
 const byQuestion = [...groupBy(ev, (e) => e.question).entries()];
-const explains = claim.collection === 'theories' ? g.explanations.filter((x) => x.theory.id === claim.id) : [];
+const theory = claim.collection === 'theories' ? claim.data : undefined;
+const explains = theory ? g.explanations.filter((x) => x.theory.id === claim.id) : [];
 const explainedBy = claim.collection === 'laws' ? g.explainedBy(claim.id) : [];
+const comparisons = ev.filter((e) => e.rival);
+const derivedMethods = g.methodsDerivedFrom(claim);
+const evaluation = evaluate(ev);
+const about = (anchor: string) => url(`/about/#${anchor}`);
+const list = <K extends string>(ks: K[], labels: Record<K, string>) => ks.map((k) => labels[k]).join(', ') || '—';
 ---
 <Base title={claim.data.name} description={claim.data.summary}>
-  <p class="eyebrow"><KindBadge claim={claim} /> · {claim.data.discipline}</p>
+  <p class="eyebrow"><KindBadge claim={claim} /> · {DISCIPLINES[claim.data.discipline]}</p>
   <h1>{claim.data.name}</h1>
   {claim.data.aka.length > 0 && <p class="muted">Also known as: {claim.data.aka.join(', ')}</p>}
   <p class="lede">{claim.data.summary}</p>
-  <p>
-    <strong>Origin:</strong>
-    {origin ? <a href={paperLink(origin)}>{shortCite(origin)}</a> : <>{claim.data.origin.by} ({claim.data.origin.year})</>}
-  </p>
   <p><TallyBadges tally={tally(ev)} /></p>
+
+  <dl class="facts">
+    <dt>Origin</dt>
+    <dd>{origin ? <a href={paperLink(origin)}>{shortCite(origin)}</a> : <>{claim.data.origin.by} ({claim.data.origin.year})</>}</dd>
+    <dt><a href={about('adoption')}>Discipline</a></dt>
+    <dd>{DISCIPLINES[claim.data.discipline]} · {ADOPTION[claim.data.adoption]}</dd>
+    <dt><a href={about('purpose')}>Purpose</a></dt>
+    <dd>{PURPOSES[claim.data.purpose]}</dd>
+    {theory && (
+      <>
+        <dt><a href={about('structure')}>Structure</a></dt>
+        <dd>{STRUCTURES[theory.structure]}{theory.processType && <> · {PROCESS_TYPES[theory.processType]} process theory</>}</dd>
+        <dt><a href={about('level')}>Level</a></dt>
+        <dd>{LEVELS[theory.level]}</dd>
+      </>
+    )}
+    <dt><a href={about('anatomy')}>Scope</a></dt>
+    <dd>{claim.data.scope}</dd>
+  </dl>
 
   {explains.length > 0 && (
     <p>
@@ -43,8 +67,67 @@ const explainedBy = claim.collection === 'laws' ? g.explainedBy(claim.id) : [];
         : <span class="muted">no theory with a cited explanatory link yet. This law describes a pattern but doesn't yet have a sourced explanation of why it occurs.</span>}
     </p>
   )}
+  {comparisons.length > 0 && (
+    <p>
+      <strong>Rivals:</strong>
+      {comparisons.map((e, i) => <>{i > 0 && '; '}<a href={claimUrl(e.rival!)}>{e.rival!.data.name}</a> <span class="muted">(compared by <a href={paperLink(e.paper)}>{shortCite(e.paper)}</a>, this {kindOf(claim)} {e.finding === 'supports' ? 'favored' : e.finding === 'refutes' ? 'not favored' : 'neither clearly favored'})</span></>)}
+    </p>
+  )}
+  {derivedMethods.length > 0 && (
+    <p>
+      <strong>Engineering methods derived from it:</strong>
+      {derivedMethods.map((m, i) => <>{i > 0 && '; '}<a href={url(`/methods/${m.id}/`)}>{m.data.name}</a></>)}
+    </p>
+  )}
+
+  {theory && (
+    <>
+      <h2 id="constructs">Constructs</h2>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Construct</th><th>Definition</th></tr></thead>
+          <tbody>{theory.constructs.map((c) => <tr><td><strong>{c.name}</strong></td><td>{c.definition}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </>
+  )}
+
+  <h2 id="propositions">Propositions</h2>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Proposition</th><th>Evidence</th></tr></thead>
+      <tbody>
+        {claim.data.propositions.map((p) => (
+          <tr id={`prop-${p.id}`}>
+            <td><span class="badge prop">{p.id}</span> {p.statement}</td>
+            <td><TallyBadges tally={tally(forProposition(ev, p.id))} /></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  {claim.data.propositions.length > 1 && (
+    <p class="muted">Counts include evidence that names the proposition and evidence about the {kindOf(claim)} as a whole.</p>
+  )}
 
   <div class="prose"><Content /></div>
+
+  <h2 id="evaluation">Evaluation</h2>
+  <div class="table-scroll">
+    <table>
+      <tbody>
+        <tr><th>Empirical support</th><td>{evaluation.studies} {evaluation.studies === 1 ? 'study' : 'studies'} <TallyBadges tally={evaluation.tally} /></td></tr>
+        <tr><th>Settings tested</th><td>{list(evaluation.settings, SETTINGS)}</td></tr>
+        <tr><th>Participants</th><td>{list(evaluation.participants, PARTICIPANTS)}</td></tr>
+        <tr><th>Domains</th><td>{list(evaluation.domains, DOMAINS)}</td></tr>
+        <tr><th>Methods</th><td>{evaluation.methods.map((m, i) => <>{i > 0 && ', '}<a href={url(`/methods/${m.id}/`)}>{m.data.name}</a></>)}</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">
+    Computed from the evidence below. Origins and post-hoc explanations are not counted. Testability, parsimony,
+    explanatory power, and utility are judgments, so the catalog leaves them to the text. <a href={about('evaluation')}>How claims are evaluated</a>
+  </p>
 
   <h2>Evidence by question</h2>
   {byQuestion.map(([q, items]) => (

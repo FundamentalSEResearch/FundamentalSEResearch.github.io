@@ -10,4 +10,6 @@ evidence:
     relation: tests
     finding: refutes
     methods: [mining-software-repositories, case-study]
+    context: { setting: open-source, participants: mixed, domain: software }
+    propositions: [declining-growth]
     note: The Linux kernel grew at a super-linear rate, contradicting the laws' prediction that growth slows as a system becomes larger and more complex.

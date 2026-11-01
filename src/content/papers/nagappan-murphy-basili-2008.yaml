@@ -10,4 +10,5 @@ evidence:
     relation: applies
     finding: supports
     methods: [mining-software-repositories, case-study]
+    context: { setting: industrial, participants: professionals, domain: software }
     note: In Windows Vista, metrics describing the organization that built each binary predicted failure-proneness better than traditional code metrics, indicating that organizational structure leaves a measurable mark on the software.

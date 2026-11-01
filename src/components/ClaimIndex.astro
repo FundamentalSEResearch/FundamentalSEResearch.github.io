@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import TallyBadges from './TallyBadges.astro';
+import { ADOPTION, DISCIPLINES, LEVELS, PROCESS_TYPES, PURPOSES, STRUCTURES } from '../content.config';
 import { claimUrl, loadGraph, tally, type Claim } from '../lib/graph';
 
 interface Props {
@@ -10,16 +11,26 @@ interface Props {
 }
 const { title, lede, claims } = Astro.props;
 const g = await loadGraph();
+const tags = (c: Claim) => {
+  const out: string[] = [PURPOSES[c.data.purpose]];
+  if (c.collection === 'theories') {
+    out.push(c.data.processType ? `${PROCESS_TYPES[c.data.processType]} process` : STRUCTURES[c.data.structure]);
+    out.push(LEVELS[c.data.level]);
+  }
+  return out;
+};
 ---
 <Base title={title}>
   <h1>{title}</h1>
   <p class="lede">{lede}</p>
+  <slot />
   <div class="grid">
     {claims.map((c) => (
       <a class="card" href={claimUrl(c)}>
-        <div class="eyebrow">{c.data.discipline}</div>
+        <div class="eyebrow">{DISCIPLINES[c.data.discipline]} · {ADOPTION[c.data.adoption]}</div>
         <h3>{c.data.name}</h3>
         <p>{c.data.summary}</p>
+        <div class="badges" style="margin-bottom:8px">{tags(c).map((t) => <span class="badge tag">{t}</span>)}</div>
         <TallyBadges tally={tally(g.forClaim(c))} />
       </a>
     ))}

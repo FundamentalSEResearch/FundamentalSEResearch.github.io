@@ -10,4 +10,5 @@ evidence:
     relation: proposes
     finding: n/a
     methods: [case-study]
+    propositions: [continuing-change, increasing-complexity]
     note: Formulates laws of software evolution, including continuing change and increasing complexity, from observations of long-lived systems such as IBM OS/360.

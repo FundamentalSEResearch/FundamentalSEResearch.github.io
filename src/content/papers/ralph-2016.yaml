@@ -1,0 +1,16 @@
+title: "Software Engineering Process Theory: A Multi-Method Comparison of Sensemaking-Coevolution-Implementation Theory and Function-Behavior-Structure Theory"
+authors: ["Ralph, P."]
+year: 2016
+venue: Information and Software Technology 70
+type: journal
+doi: 10.1016/j.infsof.2015.06.010
+evidence:
+  - question: how-teams-design-software
+    theory: sensemaking-coevolution-implementation
+    relation: compares
+    rival: function-behaviour-structure
+    finding: supports
+    methods: [rival-theory-comparison, survey, case-study]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [sensemaking, coevolution, ad-hoc-oscillation]
+    note: A questionnaire answered by more than 1,300 developers and four longitudinal case studies, each coded against both theories, favored SCI over FBS. Support for SCI did not vary with developers' experience, education, nationality, or project size.

@@ -1,11 +1,40 @@
 ---
 import ClaimIndex from '../../components/ClaimIndex.astro';
-import { loadGraph } from '../../lib/graph';
+import { DISCIPLINES, LEVELS, PROCESS_TYPES } from '../../content.config';
+import { claimUrl, loadGraph, url, type Theory } from '../../lib/graph';
 
 const g = await loadGraph();
+const columns = [
+  { label: 'Variance', match: (t: Theory) => t.data.structure === 'variance' },
+  ...Object.entries(PROCESS_TYPES).map(([k, label]) => ({ label: `${label} process`, match: (t: Theory) => t.data.processType === k })),
+].filter((col) => g.theories.some(col.match));
+const disciplines = Object.entries(DISCIPLINES)
+  .map(([k, label]) => ({ label, n: g.theories.filter((t) => t.data.discipline === k).length }))
+  .filter((d) => d.n);
 ---
 <ClaimIndex
   title="Theories"
-  lede="Theories explain why things happen: they propose concepts, relationships, and a mechanism. A theory may account for one or more laws, and each such link cites the paper that makes it."
+  lede="Theories explain why things happen. Each one names its constructs, states testable propositions, gives an explanation, and declares its scope. A theory may account for one or more laws, and each such link cites the paper that makes it."
   claims={g.theories}
-/>
+>
+  <div class="table-scroll" style="margin:20px 0">
+    <table>
+      <thead>
+        <tr><th><a href={url('/about/#level')}>Level</a> \ <a href={url('/about/#structure')}>structure</a></th>{columns.map((col) => <th>{col.label}</th>)}</tr>
+      </thead>
+      <tbody>
+        {Object.entries(LEVELS).map(([k, label]) => (
+          <tr>
+            <td>{label}</td>
+            {columns.map((col) => (
+              <td>{g.theories.filter((t) => t.data.level === k && col.match(t)).map((t, i) => <>{i > 0 && ', '}<a href={claimUrl(t)}>{t.data.name}</a></>)}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">
+    <a href={url('/about/#adoption')}>Where these theories come from</a>: {disciplines.map((d) => `${d.label} (${d.n})`).join(' · ')}
+  </p>
+</ClaimIndex>

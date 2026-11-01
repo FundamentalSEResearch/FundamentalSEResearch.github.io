@@ -1,10 +1,16 @@
 ---
 name: Planning Fallacy
-discipline: Psychology
+discipline: psychology
+adoption: borrowed
+purpose: prediction
 summary: People underestimate how long their own future tasks will take, even when they know similar past tasks overran.
 origin:
   by: Kahneman & Tversky
   year: 1979
+propositions:
+  - id: underestimation
+    statement: People predict that their own future tasks will be finished sooner than they actually are, even when they know similar past tasks overran.
+scope: Individuals and teams predicting the duration, effort, or cost of their own future tasks and projects.
 ---
 
 ## Statement

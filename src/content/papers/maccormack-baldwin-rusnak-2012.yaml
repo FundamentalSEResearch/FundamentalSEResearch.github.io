@@ -10,4 +10,5 @@ evidence:
     relation: tests
     finding: supports
     methods: [mining-software-repositories]
+    context: { setting: mixed, participants: mixed, domain: software }
     note: Comparing matched pairs of products built by tightly-coupled (commercial) and loosely-coupled (open source) organizations, found that loosely-coupled organizations tended to produce more modular designs, as the mirroring hypothesis predicts.

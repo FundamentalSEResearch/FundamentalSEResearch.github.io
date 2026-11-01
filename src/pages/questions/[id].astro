@@ -5,7 +5,7 @@ import EvidenceList from '../../components/EvidenceList.astro';
 import KindBadge from '../../components/KindBadge.astro';
 import TallyBadges from '../../components/TallyBadges.astro';
 import { AREAS } from '../../content.config';
-import { claimKey, claimUrl, groupBy, kindOf, loadGraph, tally } from '../../lib/graph';
+import { claimKey, claimUrl, groupBy, kindOf, loadGraph, paperLink, shortCite, tally } from '../../lib/graph';
 
 export async function getStaticPaths() {
   const g = await loadGraph();
@@ -20,6 +20,8 @@ const sections = [
   { kind: 'law', heading: 'Laws: what happens', blurb: 'Regularities proposed as the answer, and whether studies find them.' },
   { kind: 'theory', heading: 'Theories: why it happens', blurb: 'Proposed mechanisms, and whether studies support them.' },
 ].map((s) => ({ ...s, rows: byClaim.filter(([c]) => kindOf(c) === s.kind) }));
+// Head-to-head tests between rival answers (Ralph 2015). Each comparison is listed once, from the recorded side.
+const comparisons = g.recorded.filter((e) => e.question.id === q.id && e.rival);
 ---
 <Base title={q.data.title} description={q.data.summary}>
   <p class="eyebrow">Question · {AREAS[q.data.area]}</p>
@@ -43,6 +45,31 @@ const sections = [
       </tbody>
     </table>
   </div>
+
+  {comparisons.length > 0 && (
+    <>
+      <h2>Head-to-head comparisons</h2>
+      <p class="muted">Studies that tested rival answers against each other, which is more informative than testing one answer against a null hypothesis.</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Study</th><th>Compared</th><th>Result</th></tr></thead>
+          <tbody>
+            {comparisons.map((e) => (
+              <tr>
+                <td><a href={paperLink(e.paper)}>{shortCite(e.paper)}</a></td>
+                <td><a href={claimUrl(e.claim)}>{e.claim.data.name}</a> vs. <a href={claimUrl(e.rival!)}>{e.rival!.data.name}</a></td>
+                <td>
+                  {e.finding === 'supports' ? <>Favors <strong>{e.claim.data.name}</strong></>
+                    : e.finding === 'refutes' ? <>Favors <strong>{e.rival!.data.name}</strong></>
+                    : 'Neither clearly favored'}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  )}
 
   {sections.filter((s) => s.rows.length).map((s) => (
     <>

@@ -10,4 +10,5 @@ evidence:
     relation: tests
     finding: supports
     methods: [mining-software-repositories]
+    context: { setting: industrial, participants: professionals, domain: software }
     note: Defines congruence as the match between coordination needs (implied by technical dependencies) and actual coordination, and finds that higher congruence is associated with faster resolution of modification requests.
