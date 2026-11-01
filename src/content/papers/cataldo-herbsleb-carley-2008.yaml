@@ -1,0 +1,13 @@
+title: "Socio-Technical Congruence: A Framework for Assessing the Impact of Technical and Work Dependencies on Software Development Productivity"
+authors: ["Cataldo, M.", "Herbsleb, J. D.", "Carley, K. M."]
+year: 2008
+venue: ESEM 2008
+type: conference
+doi: 10.1145/1414004.1414008
+evidence:
+  - question: how-team-size-affects-speed
+    theory: socio-technical-congruence
+    relation: tests
+    finding: supports
+    methods: [mining-software-repositories]
+    note: Defines congruence as the match between coordination needs (implied by technical dependencies) and actual coordination, and finds that higher congruence is associated with faster resolution of modification requests.

@@ -1,0 +1,55 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import EvidenceList from '../../components/EvidenceList.astro';
+import TallyBadges from '../../components/TallyBadges.astro';
+import { AREAS } from '../../content.config';
+import { groupBy, loadGraph, tally, url } from '../../lib/graph';
+
+export async function getStaticPaths() {
+  const g = await loadGraph();
+  return g.questions.map((q) => ({ params: { id: q.id }, props: { id: q.id } }));
+}
+
+const g = await loadGraph();
+const q = g.questions.find((x) => x.id === Astro.props.id)!;
+const { Content } = await render(q);
+const byTheory = [...groupBy(g.forQuestion(q.id), (e) => e.theory).entries()];
+---
+<Base title={q.data.title} description={q.data.summary}>
+  <p class="eyebrow">Question · {AREAS[q.data.area]}</p>
+  <h1>{q.data.title}</h1>
+  <p class="lede">{q.data.summary}</p>
+
+  <div class="prose"><Content /></div>
+
+  <h2>Candidate theories</h2>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Theory</th><th>Kind</th><th>Evidence on this question</th></tr></thead>
+      <tbody>
+        {byTheory.map(([t, ev]) => (
+          <tr>
+            <td><a href={`#${t.id}`}>{t.data.name}</a></td>
+            <td>{t.data.kind}</td>
+            <td><TallyBadges tally={tally(ev)} /></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  {byTheory.map(([t, ev]) => (
+    <section class="theory-block" id={t.id}>
+      <h3>
+        <a href={url(`/theories/${t.id}/`)}>{t.data.name}</a>
+        <span class="muted" style="font-family:var(--font);font-weight:400;font-size:0.95rem">{t.data.summary}</span>
+      </h3>
+      <EvidenceList items={ev} />
+    </section>
+  ))}
+
+  <p class="muted" style="margin-top:32px">
+    Know a study that belongs here? <a href="https://github.com/software-engineering-theories">Propose evidence on GitHub</a>.
+  </p>
+</Base>

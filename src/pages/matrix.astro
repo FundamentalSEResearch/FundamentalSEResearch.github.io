@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import TallyBadges from '../components/TallyBadges.astro';
+import { loadGraph, tally, url } from '../lib/graph';
+
+const g = await loadGraph();
+const cell = (qid: string, tid: string) => g.evidence.filter((e) => e.question.id === qid && e.theory.id === tid);
+---
+<Base title="Evidence map">
+  <h1>Evidence map</h1>
+  <p class="lede">
+    Questions × theories. Each cell summarizes the studies linking a theory to a question. Empty cells are untested
+    combinations, which may be gaps worth researching.
+  </p>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Question</th>
+          {g.theories.map((t) => <th><a href={url(`/theories/${t.id}/`)}>{t.data.name}</a></th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {g.questions.map((q) => (
+          <tr>
+            <td style="min-width:220px"><a href={url(`/questions/${q.id}/`)}>{q.data.title}</a></td>
+            {g.theories.map((t) => {
+              const ev = cell(q.id, t.id);
+              return <td>{ev.length ? <a href={url(`/questions/${q.id}/#${t.id}`)}><TallyBadges tally={tally(ev)} /></a> : <span class="muted">·</span>}</td>;
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</Base>

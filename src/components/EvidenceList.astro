@@ -1,0 +1,36 @@
+---
+import { paperLink, shortCite, url, type Evidence } from '../lib/graph';
+
+interface Props {
+  items: Evidence[];
+  /** Which linked entities to show alongside each item. */
+  show?: ('question' | 'theory')[];
+}
+const { items, show = [] } = Astro.props;
+---
+<ul class="evidence">
+  {items.map((e) => (
+    <li>
+      <div class="head">
+        <span class={`badge ${e.relation === 'proposes' ? 'proposes' : e.finding}`}>
+          {e.relation === 'proposes' ? 'proposes' : e.finding}
+        </span>
+        <a href={url(`/papers/#${e.paper.id}`)}><strong>{shortCite(e.paper)}</strong></a>
+        <span class="muted">{e.relation}</span>
+        {show.includes('theory') && <a href={url(`/theories/${e.theory.id}/`)}>{e.theory.data.name}</a>}
+      </div>
+      {show.includes('question') && (
+        <div class="meta">
+          On: <a href={url(`/questions/${e.question.id}/`)}>{e.question.data.title}</a>
+        </div>
+      )}
+      <p class="note">{e.note}</p>
+      <div class="meta">
+        <a href={paperLink(e.paper)}>{e.paper.data.title}</a>, {e.paper.data.venue} ·
+        Method: {e.methods.map((m, i) => (
+          <>{i > 0 && ', '}<a href={url(`/methods/${m.id}/`)}>{m.data.name}</a></>
+        ))}
+      </div>
+    </li>
+  ))}
+</ul>

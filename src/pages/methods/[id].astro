@@ -1,0 +1,30 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import EvidenceList from '../../components/EvidenceList.astro';
+import { loadGraph, paperLink, shortCite } from '../../lib/graph';
+
+export async function getStaticPaths() {
+  const g = await loadGraph();
+  return g.methods.map((m) => ({ params: { id: m.id }, props: { id: m.id } }));
+}
+
+const g = await loadGraph();
+const m = g.methods.find((x) => x.id === Astro.props.id)!;
+const { Content } = await render(m);
+const ev = g.forMethod(m.id);
+const refs = m.data.references.map((r) => g.paper(r.id));
+---
+<Base title={m.data.name} description={m.data.summary}>
+  <p class="eyebrow">{m.data.kind} method</p>
+  <h1>{m.data.name}</h1>
+  <p class="lede">{m.data.summary}</p>
+  <div class="prose"><Content /></div>
+  <p>
+    <strong>Methodological reference{refs.length > 1 ? 's' : ''}:</strong>
+    {refs.map((p, i) => <>{i > 0 && '; '}<a href={paperLink(p)}>{shortCite(p)}</a>, <em>{p.data.title}</em></>)}
+  </p>
+
+  <h2>Evidence produced with this method</h2>
+  {ev.length ? <EvidenceList items={ev} show={['question', 'theory']} /> : <p class="muted">None yet.</p>}
+</Base>

@@ -1,0 +1,13 @@
+title: "The Influence of Organizational Structure on Software Quality: An Empirical Case Study"
+authors: ["Nagappan, N.", "Murphy, B.", "Basili, V."]
+year: 2008
+venue: ICSE 2008
+type: conference
+doi: 10.1145/1368088.1368160
+evidence:
+  - question: does-organization-shape-software
+    theory: conways-law
+    relation: applies
+    finding: supports
+    methods: [mining-software-repositories, case-study]
+    note: In Windows Vista, metrics describing the organization that built each binary predicted failure-proneness better than traditional code metrics, indicating that organizational structure leaves a measurable mark on the software.

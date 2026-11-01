@@ -1,0 +1,13 @@
+title: "Evolution in Open Source Software: A Case Study"
+authors: ["Godfrey, M. W.", "Tu, Q."]
+year: 2000
+venue: ICSM 2000
+type: conference
+doi: 10.1109/ICSM.2000.883030
+evidence:
+  - question: why-software-gets-harder-to-change
+    theory: lehmans-laws
+    relation: tests
+    finding: refutes
+    methods: [mining-software-repositories, case-study]
+    note: The Linux kernel grew at a super-linear rate, contradicting the laws' prediction that growth slows as a system becomes larger and more complex.

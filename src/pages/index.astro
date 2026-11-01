@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import TallyBadges from '../components/TallyBadges.astro';
+import { AREAS } from '../content.config';
+import { loadGraph, tally, url } from '../lib/graph';
+
+const g = await loadGraph();
+const areas = Object.entries(AREAS).map(([key, label]) => ({
+  label,
+  questions: g.questions
+    .filter((q) => q.data.area === key)
+    .map((q) => {
+      const ev = g.forQuestion(q.id);
+      return { q, theories: new Set(ev.map((e) => e.theory.id)).size, tally: tally(ev) };
+    }),
+}));
+---
+<Base title="Software Engineering Theories">
+  <p class="eyebrow">An open, evidence-based catalog</p>
+  <h1>Fundamental questions in software engineering, and what the evidence says</h1>
+  <p class="lede">
+    Each entry starts from a scientific question, lists the theories proposed to answer it, and links every claim to the
+    published studies that support, challenge, or qualify it.
+  </p>
+  <div class="flow" aria-label="How the catalog is organized">
+    <span class="step">Question</span> → <span class="step">Competing theories</span> → <span class="step">Evidence (paper + method + finding)</span>
+  </div>
+  <div class="stats">
+    <div><strong>{g.questions.length}</strong>questions</div>
+    <div><strong>{g.theories.length}</strong>theories</div>
+    <div><strong>{g.evidence.length}</strong>evidence links</div>
+    <div><strong>{g.papers.length}</strong>papers</div>
+  </div>
+
+  <p><input class="search" type="search" id="q" placeholder="Filter questions…" aria-label="Filter questions" /></p>
+
+  {areas.filter((a) => a.questions.length).map((a) => (
+    <section data-area>
+      <h2>{a.label}</h2>
+      <div class="grid">
+        {a.questions.map(({ q, theories, tally: t }) => (
+          <a class="card" href={url(`/questions/${q.id}/`)} data-text={`${q.data.title} ${q.data.summary}`.toLowerCase()}>
+            <h3>{q.data.title}</h3>
+            <p>{q.data.summary}</p>
+            <div class="meta muted" style="font-size:0.85rem;margin-bottom:6px">{theories} {theories === 1 ? 'theory' : 'theories'}</div>
+            <TallyBadges tally={t} />
+          </a>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <script>
+    const input = document.getElementById('q') as HTMLInputElement;
+    input.addEventListener('input', () => {
+      const term = input.value.trim().toLowerCase();
+      document.querySelectorAll<HTMLElement>('[data-area]').forEach((section) => {
+        let visible = 0;
+        section.querySelectorAll<HTMLElement>('[data-text]').forEach((card) => {
+          const show = !term || card.dataset.text!.includes(term);
+          card.hidden = !show;
+          if (show) visible++;
+        });
+        section.hidden = visible === 0;
+      });
+    });
+  </script>
+</Base>

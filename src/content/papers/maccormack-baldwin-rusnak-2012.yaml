@@ -1,0 +1,13 @@
+title: "Exploring the Duality between Product and Organizational Architectures: A Test of the \"Mirroring\" Hypothesis"
+authors: ["MacCormack, A.", "Baldwin, C.", "Rusnak, J."]
+year: 2012
+venue: Research Policy 41(8)
+type: journal
+doi: 10.1016/j.respol.2012.04.011
+evidence:
+  - question: does-organization-shape-software
+    theory: conways-law
+    relation: tests
+    finding: supports
+    methods: [mining-software-repositories]
+    note: Comparing matched pairs of products built by tightly-coupled (commercial) and loosely-coupled (open source) organizations, found that loosely-coupled organizations tended to produce more modular designs, as the mirroring hypothesis predicts.

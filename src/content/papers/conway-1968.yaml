@@ -1,0 +1,13 @@
+title: How Do Committees Invent?
+authors: ["Conway, M. E."]
+year: 1968
+venue: Datamation 14(4)
+type: journal
+url: http://www.melconway.com/Home/Committees_Paper.html
+evidence:
+  - question: does-organization-shape-software
+    theory: conways-law
+    relation: proposes
+    finding: n/a
+    methods: [case-study]
+    note: Argues from design experience that any organization designing a system produces a design whose structure is a copy of the organization's communication structure.

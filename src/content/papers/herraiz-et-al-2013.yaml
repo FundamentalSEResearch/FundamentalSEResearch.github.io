@@ -1,0 +1,13 @@
+title: "The Evolution of the Laws of Software Evolution: A Discussion Based on a Systematic Literature Review"
+authors: ["Herraiz, I.", "Rodriguez, D.", "Robles, G.", "Gonzalez-Barahona, J. M."]
+year: 2013
+venue: ACM Computing Surveys 46(2)
+type: journal
+doi: 10.1145/2543581.2543595
+evidence:
+  - question: why-software-gets-harder-to-change
+    theory: lehmans-laws
+    relation: reviews
+    finding: mixed
+    methods: [systematic-literature-review]
+    note: Across decades of studies, the laws of continuing change and continuing growth are widely confirmed, while others, such as declining growth, often fail to hold, particularly in open source systems.

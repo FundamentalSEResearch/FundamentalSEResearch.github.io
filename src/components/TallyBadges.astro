@@ -1,0 +1,12 @@
+---
+import type { Tally } from '../lib/graph';
+
+interface Props {
+  tally: Tally;
+}
+const { tally } = Astro.props;
+const order = ['supports', 'mixed', 'refutes', 'proposes'] as const;
+---
+<span class="badges">
+  {order.filter((k) => tally[k] > 0).map((k) => <span class={`badge ${k}`}>{tally[k]} {k}</span>)}
+</span>

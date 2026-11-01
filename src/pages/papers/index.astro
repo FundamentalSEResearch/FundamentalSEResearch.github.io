@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import { loadGraph, paperLink, url } from '../../lib/graph';
+
+const g = await loadGraph();
+---
+<Base title="Papers">
+  <h1>Papers</h1>
+  <p class="lede">Every source in the catalog, with a DOI or a stable URL. Each entry shows what the paper contributes.</p>
+  <ul class="evidence">
+    {g.papers.map((p) => {
+      const ev = g.evidence.filter((e) => e.paper.id === p.id);
+      const origins = g.originOf(p.id);
+      const methodRefs = g.citingMethod(p.id);
+      return (
+        <li id={p.id}>
+          <div class="meta">{p.data.authors.join('; ')} ({p.data.year})</div>
+          <div><a href={paperLink(p)}><strong>{p.data.title}</strong></a></div>
+          <div class="meta">{p.data.venue}{p.data.doi && <> · doi:{p.data.doi}</>}</div>
+          <div class="badges" style="margin-top:6px">
+            {ev.map((e) => (
+              <a class={`badge ${e.relation === 'proposes' ? 'proposes' : e.finding}`} href={url(`/questions/${e.question.id}/#${e.theory.id}`)}>
+                {e.relation === 'proposes' ? 'proposes' : `${e.relation}: ${e.finding}`} · {e.theory.data.name}
+              </a>
+            ))}
+            {origins.filter((t) => !ev.some((e) => e.theory.id === t.id)).map((t) => (
+              <a class="badge proposes" href={url(`/theories/${t.id}/`)}>origin of {t.data.name}</a>
+            ))}
+            {methodRefs.map((m) => <a class="badge" href={url(`/methods/${m.id}/`)}>reference for {m.data.name}</a>)}
+          </div>
+        </li>
+      );
+    })}
+  </ul>
+</Base>

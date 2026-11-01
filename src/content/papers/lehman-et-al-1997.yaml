@@ -1,0 +1,13 @@
+title: "Metrics and Laws of Software Evolution: The Nineties View"
+authors: ["Lehman, M. M.", "Ramil, J. F.", "Wernick, P. D.", "Perry, D. E.", "Turski, W. M."]
+year: 1997
+venue: METRICS 1997
+type: conference
+doi: 10.1109/METRIC.1997.637156
+evidence:
+  - question: why-software-gets-harder-to-change
+    theory: lehmans-laws
+    relation: tests
+    finding: supports
+    methods: [mining-software-repositories]
+    note: Analyzing release-level metrics from industrial systems (FEAST project), reports growth patterns largely consistent with the laws of software evolution.

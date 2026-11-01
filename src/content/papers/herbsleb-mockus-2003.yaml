@@ -1,0 +1,13 @@
+title: An Empirical Study of Speed and Communication in Globally Distributed Software Development
+authors: ["Herbsleb, J. D.", "Mockus, A."]
+year: 2003
+venue: IEEE Transactions on Software Engineering 29(6)
+type: journal
+doi: 10.1109/TSE.2003.1205177
+evidence:
+  - question: how-team-size-affects-speed
+    theory: coordination-theory
+    relation: applies
+    finding: supports
+    methods: [mining-software-repositories, survey]
+    note: Using change-management data and surveys, found that work spanning multiple sites took substantially longer than same-site work, and that the delay was associated with more people being involved and weaker communication across sites.

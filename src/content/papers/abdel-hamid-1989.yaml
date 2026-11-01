@@ -1,0 +1,13 @@
+title: "The Dynamics of Software Project Staffing: A System Dynamics Based Simulation Approach"
+authors: ["Abdel-Hamid, T. K."]
+year: 1989
+venue: IEEE Transactions on Software Engineering 15(2)
+type: journal
+doi: 10.1109/32.21738
+evidence:
+  - question: how-team-size-affects-speed
+    theory: brooks-law
+    relation: tests
+    finding: mixed
+    methods: [simulation]
+    note: A system-dynamics model of a software project suggests that adding staff to a late project reliably increases cost, but does not always make the project finish later; the schedule effect depends on when and how people are added.

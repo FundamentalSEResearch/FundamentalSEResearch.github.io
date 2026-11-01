@@ -1,0 +1,37 @@
+name: Propose evidence
+description: Suggest a paper that tests, applies, or reviews a theory on a question
+labels: [evidence]
+body:
+  - type: input
+    id: doi
+    attributes:
+      label: DOI or stable URL
+      placeholder: 10.1109/TSE.2003.1205177
+    validations:
+      required: true
+  - type: input
+    id: question
+    attributes:
+      label: Which question does it address?
+      description: An existing question id, or describe a new one.
+    validations:
+      required: true
+  - type: input
+    id: theory
+    attributes:
+      label: Which theory does it test, apply, or review?
+    validations:
+      required: true
+  - type: dropdown
+    id: finding
+    attributes:
+      label: Finding
+      options: [supports, mixed, refutes, proposes]
+    validations:
+      required: true
+  - type: textarea
+    id: note
+    attributes:
+      label: What did the paper find? (1–2 sentences, in your own words)
+    validations:
+      required: true

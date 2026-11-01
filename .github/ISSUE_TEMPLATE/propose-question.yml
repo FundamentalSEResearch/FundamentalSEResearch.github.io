@@ -1,0 +1,23 @@
+name: Propose a question
+description: Suggest a fundamental scientific question in software engineering
+labels: [question]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: The question (phrased as a question)
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why is it fundamental?
+    validations:
+      required: true
+  - type: textarea
+    id: papers
+    attributes:
+      label: At least one paper (DOI) that addresses it
+      description: Questions cannot be added without evidence.
+    validations:
+      required: true

@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import { loadGraph, url } from '../../lib/graph';
+
+const g = await loadGraph();
+const groups = [
+  ['research', 'Research methods', 'How evidence about a theory is produced.'],
+  ['engineering', 'Engineering methods', 'Practices derived from a theory and used in software development.'],
+] as const;
+---
+<Base title="Methods">
+  <h1>Methods</h1>
+  <p class="lede">Every evidence link records the method behind it, so you can judge how strong the evidence is.</p>
+  {groups.map(([kind, label, blurb]) => (
+    <section>
+      <h2>{label}</h2>
+      <p class="muted">{blurb}</p>
+      <div class="grid">
+        {g.methods.filter((m) => m.data.kind === kind).map((m) => (
+          <a class="card" href={url(`/methods/${m.id}/`)}>
+            <h3>{m.data.name}</h3>
+            <p>{m.data.summary}</p>
+            <span class="badge">{g.forMethod(m.id).length} evidence links</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  ))}
+</Base>

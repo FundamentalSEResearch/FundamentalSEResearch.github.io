@@ -1,0 +1,13 @@
+title: "Does Code Decay? Assessing the Evidence from Change Management Data"
+authors: ["Eick, S. G.", "Graves, T. L.", "Karr, A. F.", "Marron, J. S.", "Mockus, A."]
+year: 2001
+venue: IEEE Transactions on Software Engineering 27(1)
+type: journal
+doi: 10.1109/32.895984
+evidence:
+  - question: why-software-gets-harder-to-change
+    theory: lehmans-laws
+    relation: tests
+    finding: supports
+    methods: [mining-software-repositories]
+    note: Change-management data from a long-lived telephone switching system show statistical evidence of code decay, with changes becoming harder to make over time, consistent with the law of increasing complexity.

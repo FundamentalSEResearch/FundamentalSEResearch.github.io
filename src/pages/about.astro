@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="About">
+  <div class="prose">
+    <h1>About</h1>
+    <p class="lede">
+      Software Engineering Theories is an open catalog of the fundamental scientific questions in software engineering,
+      the theories proposed to answer them, and the published evidence for and against each theory.
+    </p>
+
+    <h2>How it is organized</h2>
+    <p>
+      The catalog is organized by <strong>question</strong> first. Questions last longer than the theories proposed to answer them, several
+      theories often compete to answer the same question, and organizing by question shows where good explanations are still missing.
+    </p>
+    <p>Underneath, the data is a graph of four entity types:</p>
+    <ul>
+      <li><strong>Questions</strong>: fundamental, empirically answerable problems.</li>
+      <li><strong>Theories</strong>: candidate explanations (laws, theories, hypotheses, heuristics).</li>
+      <li><strong>Methods</strong>: research methods that produce evidence, and engineering methods derived from theories.</li>
+      <li><strong>Papers</strong>: published works. Each paper carries <em>evidence links</em> of the form
+        “this paper <em>tests</em> theory T on question Q using method M, and the finding <em>supports</em> it.”</li>
+    </ul>
+    <p>Question and theory pages are generated from those links, so nothing is attached to a question without a paper behind it.</p>
+
+    <h2>Evidence policy</h2>
+    <ul>
+      <li>Every paper must have a DOI or a stable URL. DOIs are checked against Crossref.</li>
+      <li>Every question must be addressed by at least one paper.</li>
+      <li>Every theory must be tested, applied, or reviewed by at least one paper beyond the one that proposed it.</li>
+      <li>Every evidence link states the method used and summarizes the finding <em>in our own words</em>.</li>
+      <li>Findings are recorded as <span class="badge supports">supports</span> <span class="badge mixed">mixed</span>
+        <span class="badge refutes">refutes</span>, and disconfirming evidence is just as welcome as confirming evidence.</li>
+    </ul>
+    <p>The site build fails if any rule is broken.</p>
+
+    <h2>Contributing</h2>
+    <p>
+      All content lives as plain Markdown and YAML files in the
+      <a href="https://github.com/software-engineering-theories">GitHub organization</a>. To add a paper, question, or
+      theory, open a pull request. The contributing guide explains the file formats.
+    </p>
+  </div>
+</Base>

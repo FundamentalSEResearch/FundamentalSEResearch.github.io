@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+import { url } from '../lib/graph';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Fundamental questions in software engineering, the theories proposed to answer them, and the evidence for each.' } = Astro.props;
+const path = Astro.url.pathname;
+const nav = [
+  ['/', 'Questions'],
+  ['/theories/', 'Theories'],
+  ['/methods/', 'Methods'],
+  ['/papers/', 'Papers'],
+  ['/matrix/', 'Evidence map'],
+  ['/about/', 'About'],
+];
+const isCurrent = (href: string) => (href === '/' ? path === url('/') : path.startsWith(url(href)));
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title === 'Software Engineering Theories' ? title : `${title} · SE Theories`}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="alternate" type="application/json" href={url('/api.json')} />
+  </head>
+  <body>
+    <header class="site">
+      <div class="wrap">
+        <a class="brand" href={url('/')}>Software Engineering Theories</a>
+        <nav>
+          {nav.map(([href, label]) => (
+            <a href={url(href)} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <main class="wrap">
+      <slot />
+    </main>
+    <footer class="site">
+      <div class="wrap">
+        Every claim links to published evidence.
+        <a href="https://github.com/software-engineering-theories">Contribute on GitHub</a> ·
+        <a href={url('/api.json')}>JSON API</a> ·
+        Content CC BY 4.0
+      </div>
+    </footer>
+  </body>
+</html>

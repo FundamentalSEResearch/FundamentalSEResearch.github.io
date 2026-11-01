@@ -1,0 +1,13 @@
+title: Programs, Life Cycles, and Laws of Software Evolution
+authors: ["Lehman, M. M."]
+year: 1980
+venue: Proceedings of the IEEE 68(9)
+type: journal
+doi: 10.1109/PROC.1980.11805
+evidence:
+  - question: why-software-gets-harder-to-change
+    theory: lehmans-laws
+    relation: proposes
+    finding: n/a
+    methods: [case-study]
+    note: Formulates laws of software evolution, including continuing change and increasing complexity, from observations of long-lived systems such as IBM OS/360.

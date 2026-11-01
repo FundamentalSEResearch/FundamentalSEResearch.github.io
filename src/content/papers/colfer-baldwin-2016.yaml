@@ -1,0 +1,13 @@
+title: "The Mirroring Hypothesis: Theory, Evidence, and Exceptions"
+authors: ["Colfer, L. J.", "Baldwin, C. Y."]
+year: 2016
+venue: Industrial and Corporate Change 25(5)
+type: journal
+doi: 10.1093/icc/dtw027
+evidence:
+  - question: does-organization-shape-software
+    theory: conways-law
+    relation: reviews
+    finding: mixed
+    methods: [systematic-literature-review]
+    note: Reviewing empirical studies across industries, found mirroring in most cases but with systematic exceptions, notably open collaborative projects where shared artifacts and communication tools let people coordinate across organizational boundaries.

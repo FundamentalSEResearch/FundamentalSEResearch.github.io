@@ -1,0 +1,13 @@
+title: "Exploring the \"Planning Fallacy\": Why People Underestimate Their Task Completion Times"
+authors: ["Buehler, R.", "Griffin, D.", "Ross, M."]
+year: 1994
+venue: Journal of Personality and Social Psychology 67(3)
+type: journal
+doi: 10.1037/0022-3514.67.3.366
+evidence:
+  - question: why-estimates-are-optimistic
+    theory: planning-fallacy
+    relation: tests
+    finding: supports
+    methods: [controlled-experiment, survey]
+    note: Across several studies (not software-specific), people underestimated how long their own tasks would take, focusing on plans for the future and discounting past experience even when they knew similar tasks had run late.

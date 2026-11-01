@@ -1,0 +1,13 @@
+title: "The Impact of Irrelevant and Misleading Information on Software Development Effort Estimates: A Randomized Controlled Field Experiment"
+authors: ["Jørgensen, M.", "Grimstad, S."]
+year: 2011
+venue: IEEE Transactions on Software Engineering 37(5)
+type: journal
+doi: 10.1109/TSE.2010.78
+evidence:
+  - question: why-estimates-are-optimistic
+    theory: anchoring
+    relation: tests
+    finding: supports
+    methods: [field-experiment]
+    note: In a randomized field experiment with professional software developers, information that should have been irrelevant to the work, including anchor-like cues, measurably shifted their effort estimates.

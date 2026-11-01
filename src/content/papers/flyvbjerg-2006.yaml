@@ -1,0 +1,13 @@
+title: "From Nobel Prize to Project Management: Getting Risks Right"
+authors: ["Flyvbjerg, B."]
+year: 2006
+venue: Project Management Journal 37(3)
+type: journal
+doi: 10.1177/875697280603700302
+evidence:
+  - question: why-estimates-are-optimistic
+    theory: planning-fallacy
+    relation: applies
+    finding: supports
+    methods: [reference-class-forecasting]
+    note: Attributes systematic cost and schedule overruns in large projects to optimism bias (the planning fallacy) and strategic misrepresentation, and proposes reference class forecasting, an outside-view method, as a corrective.
