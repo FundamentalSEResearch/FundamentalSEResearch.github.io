@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import TallyBadges from './TallyBadges.astro';
+import { claimUrl, loadGraph, tally, type Claim } from '../lib/graph';
+
+interface Props {
+  title: string;
+  lede: string;
+  claims: Claim[];
+}
+const { title, lede, claims } = Astro.props;
+const g = await loadGraph();
+---
+<Base title={title}>
+  <h1>{title}</h1>
+  <p class="lede">{lede}</p>
+  <div class="grid">
+    {claims.map((c) => (
+      <a class="card" href={claimUrl(c)}>
+        <div class="eyebrow">{c.data.discipline}</div>
+        <h3>{c.data.name}</h3>
+        <p>{c.data.summary}</p>
+        <TallyBadges tally={tally(g.forClaim(c))} />
+      </a>
+    ))}
+  </div>
+</Base>

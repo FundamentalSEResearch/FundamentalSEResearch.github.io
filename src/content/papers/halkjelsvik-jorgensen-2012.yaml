@@ -6,7 +6,7 @@ type: journal
 doi: 10.1037/a0025996
 evidence:
   - question: why-estimates-are-optimistic
-    theory: planning-fallacy
+    law: planning-fallacy
     relation: reviews
     finding: mixed
     methods: [systematic-literature-review]

@@ -1,0 +1,9 @@
+---
+import { kindOf, type Claim } from '../lib/graph';
+
+interface Props {
+  claim: Claim;
+}
+const kind = kindOf(Astro.props.claim);
+---
+<span class={`badge ${kind}`} title={kind === 'law' ? 'Describes what happens' : 'Explains why it happens'}>{kind}</span>

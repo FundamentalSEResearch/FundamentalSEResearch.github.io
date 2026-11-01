@@ -1,6 +1,5 @@
 ---
 name: Anchoring and Adjustment
-kind: heuristic
 discipline: Psychology
 summary: Numeric judgments are pulled toward an initial value (an anchor), even when that value is irrelevant.
 origin:

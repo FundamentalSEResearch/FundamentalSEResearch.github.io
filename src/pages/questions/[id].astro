@@ -2,9 +2,10 @@
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import EvidenceList from '../../components/EvidenceList.astro';
+import KindBadge from '../../components/KindBadge.astro';
 import TallyBadges from '../../components/TallyBadges.astro';
 import { AREAS } from '../../content.config';
-import { groupBy, loadGraph, tally, url } from '../../lib/graph';
+import { claimKey, claimUrl, groupBy, kindOf, loadGraph, tally } from '../../lib/graph';
 
 export async function getStaticPaths() {
   const g = await loadGraph();
@@ -14,7 +15,11 @@ export async function getStaticPaths() {
 const g = await loadGraph();
 const q = g.questions.find((x) => x.id === Astro.props.id)!;
 const { Content } = await render(q);
-const byTheory = [...groupBy(g.forQuestion(q.id), (e) => e.theory).entries()];
+const byClaim = [...groupBy(g.forQuestion(q.id), (e) => e.claim).entries()];
+const sections = [
+  { kind: 'law', heading: 'Laws: what happens', blurb: 'Regularities proposed as the answer, and whether studies find them.' },
+  { kind: 'theory', heading: 'Theories: why it happens', blurb: 'Proposed mechanisms, and whether studies support them.' },
+].map((s) => ({ ...s, rows: byClaim.filter(([c]) => kindOf(c) === s.kind) }));
 ---
 <Base title={q.data.title} description={q.data.summary}>
   <p class="eyebrow">Question · {AREAS[q.data.area]}</p>
@@ -23,15 +28,15 @@ const byTheory = [...groupBy(g.forQuestion(q.id), (e) => e.theory).entries()];
 
   <div class="prose"><Content /></div>
 
-  <h2>Candidate theories</h2>
+  <h2>Candidate answers</h2>
   <div class="table-scroll">
     <table>
-      <thead><tr><th>Theory</th><th>Kind</th><th>Evidence on this question</th></tr></thead>
+      <thead><tr><th>Law or theory</th><th>Type</th><th>Evidence on this question</th></tr></thead>
       <tbody>
-        {byTheory.map(([t, ev]) => (
+        {byClaim.map(([c, ev]) => (
           <tr>
-            <td><a href={`#${t.id}`}>{t.data.name}</a></td>
-            <td>{t.data.kind}</td>
+            <td><a href={`#${claimKey(c)}`}>{c.data.name}</a></td>
+            <td><KindBadge claim={c} /></td>
             <td><TallyBadges tally={tally(ev)} /></td>
           </tr>
         ))}
@@ -39,14 +44,20 @@ const byTheory = [...groupBy(g.forQuestion(q.id), (e) => e.theory).entries()];
     </table>
   </div>
 
-  {byTheory.map(([t, ev]) => (
-    <section class="theory-block" id={t.id}>
-      <h3>
-        <a href={url(`/theories/${t.id}/`)}>{t.data.name}</a>
-        <span class="muted" style="font-family:var(--font);font-weight:400;font-size:0.95rem">{t.data.summary}</span>
-      </h3>
-      <EvidenceList items={ev} />
-    </section>
+  {sections.filter((s) => s.rows.length).map((s) => (
+    <>
+      <h2>{s.heading}</h2>
+      <p class="muted">{s.blurb}</p>
+      {s.rows.map(([c, ev]) => (
+        <section class="theory-block" id={claimKey(c)}>
+          <h3>
+            <a href={claimUrl(c)}>{c.data.name}</a>
+            <span class="muted" style="font-family:var(--font);font-weight:400;font-size:0.95rem">{c.data.summary}</span>
+          </h3>
+          <EvidenceList items={ev} />
+        </section>
+      ))}
+    </>
   ))}
 
   <p class="muted" style="margin-top:32px">

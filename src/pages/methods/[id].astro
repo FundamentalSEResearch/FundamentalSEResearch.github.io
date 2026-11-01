@@ -26,5 +26,5 @@ const refs = m.data.references.map((r) => g.paper(r.id));
   </p>
 
   <h2>Evidence produced with this method</h2>
-  {ev.length ? <EvidenceList items={ev} show={['question', 'theory']} /> : <p class="muted">None yet.</p>}
+  {ev.length ? <EvidenceList items={ev} show={['question', 'claim']} /> : <p class="muted">None yet.</p>}
 </Base>

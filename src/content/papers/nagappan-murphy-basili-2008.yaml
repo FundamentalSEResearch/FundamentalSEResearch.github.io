@@ -6,7 +6,7 @@ type: conference
 doi: 10.1145/1368088.1368160
 evidence:
   - question: does-organization-shape-software
-    theory: conways-law
+    law: conways-law
     relation: applies
     finding: supports
     methods: [mining-software-repositories, case-study]

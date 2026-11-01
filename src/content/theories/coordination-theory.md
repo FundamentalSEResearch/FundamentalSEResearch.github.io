@@ -1,6 +1,5 @@
 ---
 name: Coordination Theory
-kind: theory
 discipline: Organization science
 summary: Coordination is the management of dependencies between activities; its cost depends on the kinds of dependencies and the mechanisms available to manage them.
 origin:

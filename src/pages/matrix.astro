@@ -1,35 +1,62 @@
 ---
 import Base from '../layouts/Base.astro';
 import TallyBadges from '../components/TallyBadges.astro';
-import { loadGraph, tally, url } from '../lib/graph';
+import { claimKey, claimUrl, loadGraph, sameClaim, tally, url, type Claim } from '../lib/graph';
 
 const g = await loadGraph();
-const cell = (qid: string, tid: string) => g.evidence.filter((e) => e.question.id === qid && e.theory.id === tid);
+const cell = (qid: string, c: Claim) => g.evidence.filter((e) => e.question.id === qid && sameClaim(e.claim, c));
 ---
 <Base title="Evidence map">
   <h1>Evidence map</h1>
   <p class="lede">
-    Questions × theories. Each cell summarizes the studies linking a theory to a question. Empty cells are untested
-    combinations, which may be gaps worth researching.
+    Questions × laws and theories. Each cell summarizes the studies linking a law or theory to a question. Empty cells
+    are untested combinations, which may be gaps worth researching.
   </p>
   <div class="table-scroll">
     <table>
       <thead>
         <tr>
-          <th>Question</th>
-          {g.theories.map((t) => <th><a href={url(`/theories/${t.id}/`)}>{t.data.name}</a></th>)}
+          <th rowspan="2">Question</th>
+          {g.laws.length > 0 && <th colspan={g.laws.length}>Laws: what happens</th>}
+          {g.theories.length > 0 && <th colspan={g.theories.length}>Theories: why</th>}
+        </tr>
+        <tr>
+          {g.claims.map((c) => <th><a href={claimUrl(c)}>{c.data.name}</a></th>)}
         </tr>
       </thead>
       <tbody>
         {g.questions.map((q) => (
           <tr>
             <td style="min-width:220px"><a href={url(`/questions/${q.id}/`)}>{q.data.title}</a></td>
-            {g.theories.map((t) => {
-              const ev = cell(q.id, t.id);
-              return <td>{ev.length ? <a href={url(`/questions/${q.id}/#${t.id}`)}><TallyBadges tally={tally(ev)} /></a> : <span class="muted">·</span>}</td>;
+            {g.claims.map((c) => {
+              const ev = cell(q.id, c);
+              return <td>{ev.length ? <a href={url(`/questions/${q.id}/#${claimKey(c)}`)}><TallyBadges tally={tally(ev)} /></a> : <span class="muted">·</span>}</td>;
             })}
           </tr>
         ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Which theories explain which laws</h2>
+  <p class="muted">Each link cites the paper that makes the connection.</p>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Law</th><th>Explained by</th></tr></thead>
+      <tbody>
+        {g.laws.map((l) => {
+          const xs = g.explainedBy(l.id);
+          return (
+            <tr>
+              <td><a href={claimUrl(l)}>{l.data.name}</a></td>
+              <td>
+                {xs.length
+                  ? xs.map((x, i) => <>{i > 0 && '; '}<a href={claimUrl(x.theory)}>{x.theory.data.name}</a> <span class="muted">({x.source.data.authors[0].split(',')[0]} {x.source.data.year})</span></>)
+                  : <span class="muted">No sourced explanation yet</span>}
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   </div>

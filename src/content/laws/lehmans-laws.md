@@ -1,6 +1,5 @@
 ---
 name: Lehman's Laws of Software Evolution
-kind: law
 discipline: Software engineering
 summary: Software used in the real world must keep changing, and as it changes its complexity grows unless work is done to reduce it.
 origin:

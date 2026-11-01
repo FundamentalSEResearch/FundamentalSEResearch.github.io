@@ -6,7 +6,7 @@ type: journal
 url: http://www.melconway.com/Home/Committees_Paper.html
 evidence:
   - question: does-organization-shape-software
-    theory: conways-law
+    law: conways-law
     relation: proposes
     finding: n/a
     methods: [case-study]

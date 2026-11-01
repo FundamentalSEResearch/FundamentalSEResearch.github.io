@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import TallyBadges from '../components/TallyBadges.astro';
 import { AREAS } from '../content.config';
-import { loadGraph, tally, url } from '../lib/graph';
+import { claimKey, kindOf, loadGraph, tally, url } from '../lib/graph';
 
 const g = await loadGraph();
 const areas = Object.entries(AREAS).map(([key, label]) => ({
@@ -11,7 +11,13 @@ const areas = Object.entries(AREAS).map(([key, label]) => ({
     .filter((q) => q.data.area === key)
     .map((q) => {
       const ev = g.forQuestion(q.id);
-      return { q, theories: new Set(ev.map((e) => e.theory.id)).size, tally: tally(ev) };
+      const claims = [...new Map(ev.map((e) => [claimKey(e.claim), e.claim])).values()];
+      return {
+        q,
+        laws: claims.filter((c) => kindOf(c) === 'law').length,
+        theories: claims.filter((c) => kindOf(c) === 'theory').length,
+        tally: tally(ev),
+      };
     }),
 }));
 ---
@@ -19,14 +25,16 @@ const areas = Object.entries(AREAS).map(([key, label]) => ({
   <p class="eyebrow">An open, evidence-based catalog</p>
   <h1>Fundamental questions in software engineering, and what the evidence says</h1>
   <p class="lede">
-    Each entry starts from a scientific question, lists the theories proposed to answer it, and links every claim to the
-    published studies that support, challenge, or qualify it.
+    Each entry starts from a scientific question, lists the <strong>laws</strong> (what happens) and
+    <strong>theories</strong> (why it happens) proposed to answer it, and links every claim to the published studies
+    that support, challenge, or qualify it.
   </p>
   <div class="flow" aria-label="How the catalog is organized">
-    <span class="step">Question</span> → <span class="step">Competing theories</span> → <span class="step">Evidence (paper + method + finding)</span>
+    <span class="step">Question</span> → <span class="step">Laws &amp; theories</span> → <span class="step">Evidence (paper + method + finding)</span>
   </div>
   <div class="stats">
     <div><strong>{g.questions.length}</strong>questions</div>
+    <div><strong>{g.laws.length}</strong>laws</div>
     <div><strong>{g.theories.length}</strong>theories</div>
     <div><strong>{g.evidence.length}</strong>evidence links</div>
     <div><strong>{g.papers.length}</strong>papers</div>
@@ -38,11 +46,11 @@ const areas = Object.entries(AREAS).map(([key, label]) => ({
     <section data-area>
       <h2>{a.label}</h2>
       <div class="grid">
-        {a.questions.map(({ q, theories, tally: t }) => (
+        {a.questions.map(({ q, laws, theories, tally: t }) => (
           <a class="card" href={url(`/questions/${q.id}/`)} data-text={`${q.data.title} ${q.data.summary}`.toLowerCase()}>
             <h3>{q.data.title}</h3>
             <p>{q.data.summary}</p>
-            <div class="meta muted" style="font-size:0.85rem;margin-bottom:6px">{theories} {theories === 1 ? 'theory' : 'theories'}</div>
+            <div class="meta muted" style="font-size:0.85rem;margin-bottom:6px">{laws} {laws === 1 ? 'law' : 'laws'} · {theories} {theories === 1 ? 'theory' : 'theories'}</div>
             <TallyBadges tally={t} />
           </a>
         ))}

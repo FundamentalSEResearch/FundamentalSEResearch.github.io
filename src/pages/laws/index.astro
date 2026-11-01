@@ -1,0 +1,11 @@
+---
+import ClaimIndex from '../../components/ClaimIndex.astro';
+import { loadGraph } from '../../lib/graph';
+
+const g = await loadGraph();
+---
+<ClaimIndex
+  title="Laws"
+  lede="Laws describe what happens: regularities observed or claimed in software development. A law says nothing about why. In software engineering, 'law' is often a popular label rather than an established result, so check the evidence."
+  claims={g.laws}
+/>

@@ -1,6 +1,5 @@
 ---
 name: Planning Fallacy
-kind: theory
 discipline: Psychology
 summary: People underestimate how long their own future tasks will take, even when they know similar past tasks overran.
 origin:

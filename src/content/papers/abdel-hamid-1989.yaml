@@ -6,7 +6,7 @@ type: journal
 doi: 10.1109/32.21738
 evidence:
   - question: how-team-size-affects-speed
-    theory: brooks-law
+    law: brooks-law
     relation: tests
     finding: mixed
     methods: [simulation]

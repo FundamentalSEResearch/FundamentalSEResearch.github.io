@@ -123,3 +123,8 @@ tr:last-child td { border-bottom: none; }
 .stats { display: flex; flex-wrap: wrap; gap: 24px; margin: 18px 0 8px; }
 .stats div { font-size: 0.9rem; color: var(--muted); }
 .stats strong { display: block; font-size: 1.6rem; color: var(--text); font-family: var(--serif); }
+
+.badge.law { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+.badge.theory { background: var(--text); color: var(--bg); }
+.kind-intro { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin: 20px 0; }
+.kind-intro .card p { margin: 0; }

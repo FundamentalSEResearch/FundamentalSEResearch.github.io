@@ -1,6 +1,5 @@
 ---
 name: Brooks' Law
-kind: law
 discipline: Software engineering
 summary: Adding manpower to a late software project makes it later.
 origin:

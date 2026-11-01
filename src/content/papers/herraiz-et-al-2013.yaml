@@ -6,7 +6,7 @@ type: journal
 doi: 10.1145/2543581.2543595
 evidence:
   - question: why-software-gets-harder-to-change
-    theory: lehmans-laws
+    law: lehmans-laws
     relation: reviews
     finding: mixed
     methods: [systematic-literature-review]

@@ -6,10 +6,11 @@ interface Props {
   title: string;
   description?: string;
 }
-const { title, description = 'Fundamental questions in software engineering, the theories proposed to answer them, and the evidence for each.' } = Astro.props;
+const { title, description = 'Fundamental questions in software engineering, the laws and theories proposed to answer them, and the evidence for each.' } = Astro.props;
 const path = Astro.url.pathname;
 const nav = [
   ['/', 'Questions'],
+  ['/laws/', 'Laws'],
   ['/theories/', 'Theories'],
   ['/methods/', 'Methods'],
   ['/papers/', 'Papers'],

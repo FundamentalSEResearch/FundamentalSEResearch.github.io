@@ -6,7 +6,7 @@ type: conference
 doi: 10.1109/ICSM.2000.883030
 evidence:
   - question: why-software-gets-harder-to-change
-    theory: lehmans-laws
+    law: lehmans-laws
     relation: tests
     finding: refutes
     methods: [mining-software-repositories, case-study]

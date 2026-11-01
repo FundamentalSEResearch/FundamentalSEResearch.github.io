@@ -1,21 +1,11 @@
 ---
-import Base from '../../layouts/Base.astro';
-import TallyBadges from '../../components/TallyBadges.astro';
-import { loadGraph, tally, url } from '../../lib/graph';
+import ClaimIndex from '../../components/ClaimIndex.astro';
+import { loadGraph } from '../../lib/graph';
 
 const g = await loadGraph();
 ---
-<Base title="Theories">
-  <h1>Theories</h1>
-  <p class="lede">Laws, theories, hypotheses, and heuristics proposed to explain software engineering phenomena. Each one has at least one study that tests, applies, or reviews it.</p>
-  <div class="grid">
-    {g.theories.map((t) => (
-      <a class="card" href={url(`/theories/${t.id}/`)}>
-        <div class="eyebrow">{t.data.kind} · {t.data.discipline}</div>
-        <h3>{t.data.name}</h3>
-        <p>{t.data.summary}</p>
-        <TallyBadges tally={tally(g.forTheory(t.id))} />
-      </a>
-    ))}
-  </div>
-</Base>
+<ClaimIndex
+  title="Theories"
+  lede="Theories explain why things happen: they propose concepts, relationships, and a mechanism. A theory may account for one or more laws, and each such link cites the paper that makes it."
+  claims={g.theories}
+/>

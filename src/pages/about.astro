@@ -6,29 +6,54 @@ import Base from '../layouts/Base.astro';
     <h1>About</h1>
     <p class="lede">
       Software Engineering Theories is an open catalog of the fundamental scientific questions in software engineering,
-      the theories proposed to answer them, and the published evidence for and against each theory.
+      the laws and theories proposed to answer them, and the published evidence for and against each.
     </p>
 
     <h2>How it is organized</h2>
     <p>
-      The catalog is organized by <strong>question</strong> first. Questions last longer than the theories proposed to answer them, several
-      theories often compete to answer the same question, and organizing by question shows where good explanations are still missing.
+      The catalog is organized by <strong>question</strong> first. Questions last longer than the answers proposed for them, several
+      laws and theories often compete to answer the same question, and organizing by question shows where good explanations are still missing.
     </p>
-    <p>Underneath, the data is a graph of four entity types:</p>
+
+    <h2 id="laws-and-theories">Laws vs. theories</h2>
+    <div class="kind-intro">
+      <div class="card">
+        <h3><span class="badge law">law</span> Describes <em>what</em> happens</h3>
+        <p>A regularity: “whenever X, then Y.” It predicts but does not explain. Example: Conway's Law says system structure mirrors organizational structure.</p>
+      </div>
+      <div class="card">
+        <h3><span class="badge theory">theory</span> Explains <em>why</em> it happens</h3>
+        <p>Concepts, relationships, and a mechanism. Example: Socio-Technical Congruence explains mirroring through the cost of coordinating across technical dependencies.</p>
+      </div>
+    </div>
+    <p>
+      In software engineering, “law” is often a popular label rather than an established result. Some laws are empirical
+      regularities, some are lessons from experience, and some are folk wisdom. Labelling something a law here says
+      <em>what kind of claim it makes</em>, not how well it is supported. The evidence decides that, and a law can be refuted.
+    </p>
+    <p>
+      The strongest knowledge combines a regularity that has been confirmed with a mechanism that has been tested. Theories can declare which laws they
+      <em>explain</em>, and each such link must cite the paper that makes it. Laws with no sourced explanation are flagged
+      as gaps on the <a href="../matrix/">evidence map</a>.
+    </p>
+
+    <h2>Data model</h2>
     <ul>
       <li><strong>Questions</strong>: fundamental, empirically answerable problems.</li>
-      <li><strong>Theories</strong>: candidate explanations (laws, theories, hypotheses, heuristics).</li>
-      <li><strong>Methods</strong>: research methods that produce evidence, and engineering methods derived from theories.</li>
+      <li><strong>Laws</strong>: claimed regularities (what happens).</li>
+      <li><strong>Theories</strong>: proposed explanations (why it happens), optionally linked to the laws they explain.</li>
+      <li><strong>Methods</strong>: research methods that produce evidence, and engineering methods derived from laws or theories.</li>
       <li><strong>Papers</strong>: published works. Each paper carries <em>evidence links</em> of the form
-        “this paper <em>tests</em> theory T on question Q using method M, and the finding <em>supports</em> it.”</li>
+        “this paper <em>tests</em> law/theory X on question Q using method M, and the finding <em>supports</em> it.”</li>
     </ul>
-    <p>Question and theory pages are generated from those links, so nothing is attached to a question without a paper behind it.</p>
+    <p>Question, law, and theory pages are generated from those links, so nothing is attached to a question without a paper behind it.</p>
 
     <h2>Evidence policy</h2>
     <ul>
       <li>Every paper must have a DOI or a stable URL. DOIs are checked against Crossref.</li>
       <li>Every question must be addressed by at least one paper.</li>
-      <li>Every theory must be tested, applied, or reviewed by at least one paper beyond the one that proposed it.</li>
+      <li>Every law and theory must be tested, applied, or reviewed by at least one paper beyond the one that proposed it.</li>
+      <li>Every “theory explains law” link must cite a paper.</li>
       <li>Every evidence link states the method used and summarizes the finding <em>in our own words</em>.</li>
       <li>Findings are recorded as <span class="badge supports">supports</span> <span class="badge mixed">mixed</span>
         <span class="badge refutes">refutes</span>, and disconfirming evidence is just as welcome as confirming evidence.</li>
@@ -38,7 +63,7 @@ import Base from '../layouts/Base.astro';
     <h2>Contributing</h2>
     <p>
       All content lives as plain Markdown and YAML files in the
-      <a href="https://github.com/software-engineering-theories">GitHub organization</a>. To add a paper, question, or
+      <a href="https://github.com/software-engineering-theories">GitHub organization</a>. To add a paper, question, law, or
       theory, open a pull request. The contributing guide explains the file formats.
     </p>
   </div>

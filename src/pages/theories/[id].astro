@@ -1,40 +1,10 @@
 ---
-import { render } from 'astro:content';
-import Base from '../../layouts/Base.astro';
-import EvidenceList from '../../components/EvidenceList.astro';
-import TallyBadges from '../../components/TallyBadges.astro';
-import { groupBy, loadGraph, paperLink, shortCite, tally, url } from '../../lib/graph';
+import ClaimPage from '../../components/ClaimPage.astro';
+import { loadGraph } from '../../lib/graph';
 
 export async function getStaticPaths() {
   const g = await loadGraph();
-  return g.theories.map((t) => ({ params: { id: t.id }, props: { id: t.id } }));
+  return g.theories.map((claim) => ({ params: { id: claim.id }, props: { claim } }));
 }
-
-const g = await loadGraph();
-const t = g.theories.find((x) => x.id === Astro.props.id)!;
-const { Content } = await render(t);
-const ev = g.forTheory(t.id);
-const origin = t.data.origin.paper && g.paper(t.data.origin.paper.id);
-const byQuestion = [...groupBy(ev, (e) => e.question).entries()];
 ---
-<Base title={t.data.name} description={t.data.summary}>
-  <p class="eyebrow">{t.data.kind} · {t.data.discipline}</p>
-  <h1>{t.data.name}</h1>
-  {t.data.aka.length > 0 && <p class="muted">Also known as: {t.data.aka.join(', ')}</p>}
-  <p class="lede">{t.data.summary}</p>
-  <p>
-    <strong>Origin:</strong>
-    {origin ? <a href={paperLink(origin)}>{shortCite(origin)}</a> : <>{t.data.origin.by} ({t.data.origin.year})</>}
-  </p>
-  <p><TallyBadges tally={tally(ev)} /></p>
-
-  <div class="prose"><Content /></div>
-
-  <h2>Evidence by question</h2>
-  {byQuestion.map(([q, items]) => (
-    <section class="theory-block">
-      <h3><a href={url(`/questions/${q.id}/`)}>{q.data.title}</a></h3>
-      <EvidenceList items={items} />
-    </section>
-  ))}
-</Base>
+<ClaimPage claim={Astro.props.claim} />

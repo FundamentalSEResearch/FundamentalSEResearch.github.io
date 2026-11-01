@@ -1,0 +1,60 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import EvidenceList from './EvidenceList.astro';
+import KindBadge from './KindBadge.astro';
+import TallyBadges from './TallyBadges.astro';
+import { claimUrl, groupBy, kindOf, loadGraph, paperLink, shortCite, tally, url, type Claim } from '../lib/graph';
+
+interface Props {
+  claim: Claim;
+}
+const { claim } = Astro.props;
+const g = await loadGraph();
+const { Content } = await render(claim);
+const ev = g.forClaim(claim);
+const origin = claim.data.origin.paper && g.paper(claim.data.origin.paper.id);
+const byQuestion = [...groupBy(ev, (e) => e.question).entries()];
+const explains = claim.collection === 'theories' ? g.explanations.filter((x) => x.theory.id === claim.id) : [];
+const explainedBy = claim.collection === 'laws' ? g.explainedBy(claim.id) : [];
+---
+<Base title={claim.data.name} description={claim.data.summary}>
+  <p class="eyebrow"><KindBadge claim={claim} /> · {claim.data.discipline}</p>
+  <h1>{claim.data.name}</h1>
+  {claim.data.aka.length > 0 && <p class="muted">Also known as: {claim.data.aka.join(', ')}</p>}
+  <p class="lede">{claim.data.summary}</p>
+  <p>
+    <strong>Origin:</strong>
+    {origin ? <a href={paperLink(origin)}>{shortCite(origin)}</a> : <>{claim.data.origin.by} ({claim.data.origin.year})</>}
+  </p>
+  <p><TallyBadges tally={tally(ev)} /></p>
+
+  {explains.length > 0 && (
+    <p>
+      <strong>Explains:</strong>
+      {explains.map((x, i) => <>{i > 0 && '; '}<a href={claimUrl(x.law)}>{x.law.data.name}</a> <span class="muted">(link made by <a href={paperLink(x.source)}>{shortCite(x.source)}</a>)</span></>)}
+    </p>
+  )}
+  {claim.collection === 'laws' && (
+    <p>
+      <strong>Explained by:</strong>
+      {explainedBy.length
+        ? explainedBy.map((x, i) => <>{i > 0 && '; '}<a href={claimUrl(x.theory)}>{x.theory.data.name}</a> <span class="muted">(link made by <a href={paperLink(x.source)}>{shortCite(x.source)}</a>)</span></>)
+        : <span class="muted">no theory with a cited explanatory link yet. This law describes a pattern but doesn't yet have a sourced explanation of why it occurs.</span>}
+    </p>
+  )}
+
+  <div class="prose"><Content /></div>
+
+  <h2>Evidence by question</h2>
+  {byQuestion.map(([q, items]) => (
+    <section class="theory-block">
+      <h3><a href={url(`/questions/${q.id}/`)}>{q.data.title}</a></h3>
+      <EvidenceList items={items} />
+    </section>
+  ))}
+  <p class="muted" style="margin-top:32px">
+    This is a {kindOf(claim)}: {kindOf(claim) === 'law' ? 'it describes a regularity (what happens).' : 'it proposes a mechanism (why something happens).'}
+    <a href={url('/about/#laws-and-theories')}>Laws vs. theories</a>
+  </p>
+</Base>

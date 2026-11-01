@@ -1,10 +1,11 @@
 ---
-import { paperLink, shortCite, url, type Evidence } from '../lib/graph';
+import KindBadge from './KindBadge.astro';
+import { claimUrl, paperLink, shortCite, url, type Evidence } from '../lib/graph';
 
 interface Props {
   items: Evidence[];
   /** Which linked entities to show alongside each item. */
-  show?: ('question' | 'theory')[];
+  show?: ('question' | 'claim')[];
 }
 const { items, show = [] } = Astro.props;
 ---
@@ -17,7 +18,7 @@ const { items, show = [] } = Astro.props;
         </span>
         <a href={url(`/papers/#${e.paper.id}`)}><strong>{shortCite(e.paper)}</strong></a>
         <span class="muted">{e.relation}</span>
-        {show.includes('theory') && <a href={url(`/theories/${e.theory.id}/`)}>{e.theory.data.name}</a>}
+        {show.includes('claim') && <><KindBadge claim={e.claim} /><a href={claimUrl(e.claim)}>{e.claim.data.name}</a></>}
       </div>
       {show.includes('question') && (
         <div class="meta">

@@ -21,21 +21,32 @@ const questions = defineCollection({
   }),
 });
 
-// A candidate explanation (law, theory, hypothesis, heuristic...) for one or more questions.
+const claimFields = {
+  name: z.string(),
+  aka: z.array(z.string()).default([]),
+  discipline: z.string(),
+  summary: z.string(),
+  origin: z.object({
+    by: z.string(),
+    year: z.number().int(),
+    // Optional because some originating works (old books, reports) have no DOI or stable URL.
+    paper: reference('papers').optional(),
+  }),
+};
+
+// A law describes WHAT happens: an observed or claimed regularity, with no commitment to a mechanism.
+const laws = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/laws' }),
+  schema: z.object(claimFields),
+});
+
+// A theory explains WHY something happens: constructs, propositions, and a mechanism.
+// `explains` links a theory to the laws it accounts for; each link must cite a paper that makes it.
 const theories = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/theories' }),
   schema: z.object({
-    name: z.string(),
-    kind: z.enum(['law', 'theory', 'hypothesis', 'heuristic', 'model']),
-    aka: z.array(z.string()).default([]),
-    discipline: z.string(),
-    summary: z.string(),
-    origin: z.object({
-      by: z.string(),
-      year: z.number().int(),
-      // Optional because some originating works (old books, reports) have no DOI or stable URL.
-      paper: reference('papers').optional(),
-    }),
+    ...claimFields,
+    explains: z.array(z.object({ law: reference('laws'), source: reference('papers') })).default([]),
   }),
 });
 
@@ -51,7 +62,7 @@ const methods = defineCollection({
 });
 
 // A published work. Its `evidence` entries are the edges of the knowledge graph:
-// "this paper <relation> <theory> on <question> using <methods>, and found <finding>".
+// "this paper <relation> <law or theory> on <question> using <methods>, and found <finding>".
 const papers = defineCollection({
   loader: glob({ pattern: '*.yaml', base: './src/content/papers' }),
   schema: z
@@ -67,7 +78,8 @@ const papers = defineCollection({
         .array(
           z.object({
             question: reference('questions'),
-            theory: reference('theories'),
+            law: reference('laws').optional(),
+            theory: reference('theories').optional(),
             relation: z.enum(['proposes', 'tests', 'applies', 'reviews']),
             finding: z.enum(['supports', 'refutes', 'mixed', 'n/a']),
             methods: z.array(reference('methods')).min(1),
@@ -77,9 +89,12 @@ const papers = defineCollection({
         .default([]),
     })
     .refine((p) => p.doi || p.url, { message: 'Every paper needs a DOI or a URL' })
+    .refine((p) => p.evidence.every((e) => !!e.law !== !!e.theory), {
+      message: 'Each evidence entry must name exactly one of `law` or `theory`',
+    })
     .refine((p) => p.evidence.every((e) => (e.relation === 'proposes') === (e.finding === 'n/a')), {
       message: "Use finding 'n/a' exactly when relation is 'proposes'",
     }),
 });
 
-export const collections = { questions, theories, methods, papers };
+export const collections = { questions, laws, theories, methods, papers };

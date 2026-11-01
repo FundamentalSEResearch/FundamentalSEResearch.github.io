@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { loadGraph, paperLink, url } from '../../lib/graph';
+import { claimKey, claimUrl, kindOf, loadGraph, paperLink, sameClaim, url } from '../../lib/graph';
 
 const g = await loadGraph();
 ---
@@ -10,8 +10,9 @@ const g = await loadGraph();
   <ul class="evidence">
     {g.papers.map((p) => {
       const ev = g.evidence.filter((e) => e.paper.id === p.id);
-      const origins = g.originOf(p.id);
+      const origins = g.originOf(p.id).filter((c) => !ev.some((e) => sameClaim(e.claim, c)));
       const methodRefs = g.citingMethod(p.id);
+      const links = g.explanationSourcedBy(p.id);
       return (
         <li id={p.id}>
           <div class="meta">{p.data.authors.join('; ')} ({p.data.year})</div>
@@ -19,13 +20,12 @@ const g = await loadGraph();
           <div class="meta">{p.data.venue}{p.data.doi && <> · doi:{p.data.doi}</>}</div>
           <div class="badges" style="margin-top:6px">
             {ev.map((e) => (
-              <a class={`badge ${e.relation === 'proposes' ? 'proposes' : e.finding}`} href={url(`/questions/${e.question.id}/#${e.theory.id}`)}>
-                {e.relation === 'proposes' ? 'proposes' : `${e.relation}: ${e.finding}`} · {e.theory.data.name}
+              <a class={`badge ${e.relation === 'proposes' ? 'proposes' : e.finding}`} href={url(`/questions/${e.question.id}/#${claimKey(e.claim)}`)}>
+                {e.relation === 'proposes' ? 'proposes' : `${e.relation}: ${e.finding}`} · {e.claim.data.name}
               </a>
             ))}
-            {origins.filter((t) => !ev.some((e) => e.theory.id === t.id)).map((t) => (
-              <a class="badge proposes" href={url(`/theories/${t.id}/`)}>origin of {t.data.name}</a>
-            ))}
+            {origins.map((c) => <a class="badge proposes" href={claimUrl(c)}>origin of {kindOf(c)} {c.data.name}</a>)}
+            {links.map((x) => <a class="badge" href={claimUrl(x.theory)}>links {x.theory.data.name} → {x.law.data.name}</a>)}
             {methodRefs.map((m) => <a class="badge" href={url(`/methods/${m.id}/`)}>reference for {m.data.name}</a>)}
           </div>
         </li>

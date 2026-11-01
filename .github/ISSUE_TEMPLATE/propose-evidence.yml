@@ -1,5 +1,5 @@
 name: Propose evidence
-description: Suggest a paper that tests, applies, or reviews a theory on a question
+description: Suggest a paper that tests, applies, or reviews a law or theory on a question
 labels: [evidence]
 body:
   - type: input
@@ -19,7 +19,7 @@ body:
   - type: input
     id: theory
     attributes:
-      label: Which theory does it test, apply, or review?
+      label: Which law or theory does it test, apply, or review?
     validations:
       required: true
   - type: dropdown

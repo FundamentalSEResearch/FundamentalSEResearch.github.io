@@ -1,6 +1,5 @@
 ---
 name: Conway's Law
-kind: hypothesis
 aka: [Mirroring hypothesis]
 discipline: Software engineering / Organization science
 summary: Organizations design systems whose structure mirrors their own communication structure.

@@ -5,4 +5,4 @@ summary: Estimate a new project by placing it in the distribution of outcomes of
 references: [flyvbjerg-2006]
 ---
 
-An engineering method derived from the [Planning Fallacy](/theories/planning-fallacy/). It counters the inside-view bias by forcing the estimator to start from base rates.
+An engineering method derived from the [Planning Fallacy](/laws/planning-fallacy/). It counters the inside-view bias by forcing the estimator to start from base rates.
