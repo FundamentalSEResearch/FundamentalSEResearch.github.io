@@ -18,110 +18,119 @@ const minYear = Math.min(...years);
 const maxYear = Math.max(...years);
 const yearRange = maxYear - minYear || 1;
 
-// Group evidence by year
-const byYear = new Map<number, typeof evidence>();
-sortedEvidence.forEach(e => {
-  if (!byYear.has(e.year)) byYear.set(e.year, []);
-  byYear.get(e.year)!.push(e);
-});
+// Alternate positions (above/below) for better visual layout
+const eventsWithPosition = sortedEvidence.map((e, i) => ({
+  ...e,
+  position: i % 2 === 0 ? 'above' : 'below',
+}));
 ---
 
-<section class="question-timeline">
+<section class="question-timeline-visual">
   <h2>Research Timeline</h2>
-  <p class="muted">How understanding of this question has evolved over {maxYear - minYear} years</p>
+  <p class="muted">How understanding of this question has evolved: theories, laws, and papers over {maxYear - minYear} years</p>
 
   <div class="timeline-container">
-    <div class="timeline-axis">
-      <div class="timeline-line"></div>
+    <!-- Timeline line -->
+    <div class="timeline-line"></div>
 
-      {sortedEvidence.map((event) => {
+    <!-- Year markers -->
+    <div class="timeline-years">
+      {Array.from({ length: 5 }, (_, i) => {
+        const year = minYear + (i * (maxYear - minYear)) / 4;
+        return <div class="year-marker" style={{ left: `${(i * 25)}%` }}>{Math.round(year)}</div>;
+      })}
+    </div>
+
+    <!-- Events with entity boxes -->
+    <div class="timeline-events">
+      {eventsWithPosition.map((event) => {
         const position = ((event.year - minYear) / yearRange) * 100;
-        const relation = event.relation;
-        const relationLabel = {
-          proposes: 'Proposed',
-          tests: 'Tested',
-          applies: 'Applied',
-          reviews: 'Reviewed',
-          modifies: 'Modified',
-          compares: 'Compared',
-          'post-hoc': 'Explained post-hoc',
-        }[relation] || relation;
+        const claim = event.claim;
+        const claimType = claim.collection === 'laws' ? 'Law' : 'Theory';
+        const paper = event.paper;
 
-        const findingBg = event.finding === 'supports' ? '#d1fae5' : event.finding === 'refutes' ? '#fee2e2' : '#fef3c7';
-        const findingColor = event.finding === 'supports' ? '#059669' : event.finding === 'refutes' ? '#dc2626' : '#b45309';
+        const findingColor =
+          event.finding === 'supports' ? '#10b981' :
+          event.finding === 'refutes' ? '#ef4444' :
+          event.finding === 'mixed' ? '#f59e0b' :
+          '#6b7280';
 
         return (
           <div
-            class="timeline-event"
+            class={`event ${event.position}`}
             style={{ left: `${position}%` }}
-            title={`${event.year}: ${event.paper.data.title}`}
           >
-            <div class="event-dot"></div>
-            <div class="event-popup">
-              <div class="popup-year">{event.year}</div>
-              <div class="popup-claim">{event.claim.data.name}</div>
-              <div class="popup-paper">
-                <a href={`/papers/#${event.paper.id}`} class="paper-link">
-                  {event.paper.data.authors[0].split(',')[0]} et al.
-                </a>
+            <!-- Entity box -->
+            <div class="entity-box">
+              <div class="entity-header">
+                <span class="entity-type">{claimType}</span>
+                <span class="entity-year">{event.year}</span>
               </div>
-              <div class="popup-relation">{relationLabel}</div>
+              <div class="entity-name" title={claim.data.name}>
+                {claim.data.name}
+              </div>
+              <div class="entity-paper" title={`${paper.data.authors[0]} et al.`}>
+                {paper.data.authors[0].split(',')[0]} et al.
+              </div>
               {event.finding !== 'n/a' && (
-                <div class="popup-finding" style={{ backgroundColor: findingBg, color: findingColor }}>
-                  {event.finding === 'supports' ? '✓' : event.finding === 'refutes' ? '✗' : '~'} {event.finding}
+                <div class="entity-finding" style={{ borderLeftColor: findingColor }}>
+                  {event.finding === 'supports' ? '✓' : event.finding === 'refutes' ? '✗' : '~'}
+                  {event.finding}
                 </div>
               )}
+              <a href={`/papers/#${paper.id}`} class="entity-link">View paper →</a>
             </div>
+
+            <!-- Connector line -->
+            <div class="connector"></div>
+
+            <!-- Timeline dot -->
+            <div class="dot" style={{ backgroundColor: findingColor }}></div>
           </div>
         );
       })}
     </div>
-
-    <div class="timeline-labels">
-      <div class="year-label">{minYear}</div>
-      <div class="year-label">{maxYear}</div>
-    </div>
   </div>
 
-  <div class="timeline-details">
-    <h3>Papers in chronological order</h3>
-    <div class="timeline-list">
+  <!-- Summary table -->
+  <div class="timeline-summary">
+    <h3>Evidence chronology</h3>
+    <div class="summary-grid">
       {sortedEvidence.map((event) => (
-        <div class="timeline-item">
-          <div class="item-year">{event.year}</div>
-          <div class="item-content">
-            <div class="item-claim">
-              <a href={`/theories/${event.claim.id}/`}>{event.claim.data.name}</a>
-              <span class="item-kind">
-                {event.claim.collection === 'laws' ? 'Law' : 'Theory'}
-              </span>
-            </div>
-            <div class="item-paper">
-              <a href={`/papers/#${event.paper.id}`}>
-                {event.paper.data.authors.map((a: string) => a.split(',')[0]).join(', ')}
-                ({event.year}): <em>{event.paper.data.title}</em>
-              </a>
-            </div>
-            <div class="item-relation">
-              {(() => {
-                const relationTexts: Record<string, string> = {
-                  proposes: 'Proposed this answer',
-                  tests: 'Empirically tested',
-                  applies: 'Applied and observed',
-                  reviews: 'Synthesized evidence',
-                  modifies: 'Refined based on evidence',
-                  compares: 'Tested against rival',
-                  'post-hoc': 'Used to explain results',
-                };
-                return relationTexts[event.relation] || event.relation;
-              })()}
-            </div>
-            {event.finding !== 'n/a' && (
-              <div class={`item-finding item-finding-${event.finding}`}>
-                <strong>Result:</strong> {event.finding}
-              </div>
-            )}
+        <div class="summary-card">
+          <div class="summary-year">{event.year}</div>
+          <div class="summary-claim">
+            <a href={`/${event.claim.collection}/${event.claim.id}/`}>
+              {event.claim.data.name}
+            </a>
+            <span class="summary-type">
+              {event.claim.collection === 'laws' ? 'Law' : 'Theory'}
+            </span>
           </div>
+          <div class="summary-paper">
+            <a href={`/papers/#${event.paper.id}`}>
+              {event.paper.data.authors.map((a: string) => a.split(',')[0]).join(', ')} ({event.year})
+            </a>
+          </div>
+          <div class="summary-relation">
+            {(() => {
+              const relationTexts: Record<string, string> = {
+                proposes: 'Proposed',
+                tests: 'Tested',
+                applies: 'Applied',
+                reviews: 'Reviewed',
+                modifies: 'Modified',
+                compares: 'Compared',
+                'post-hoc': 'Explained post-hoc',
+              };
+              return relationTexts[event.relation] || event.relation;
+            })()}
+          </div>
+          {event.finding !== 'n/a' && (
+            <div class={`summary-finding finding-${event.finding}`}>
+              {event.finding}
+            </div>
+          )}
         </div>
       ))}
     </div>
@@ -129,259 +138,352 @@ sortedEvidence.forEach(e => {
 </section>
 
 <style>
-  .question-timeline {
-    margin: 3rem 0;
+  .question-timeline-visual {
+    margin: 4rem 0;
     padding-top: 2rem;
-    border-top: 1px solid var(--border-color);
+    border-top: 2px solid var(--border-color);
   }
 
-  .question-timeline h2 {
+  .question-timeline-visual h2 {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
   }
 
   .timeline-container {
     position: relative;
-    height: 100px;
-    margin: 2rem 0 3rem 0;
+    margin: 4rem 0 3rem 0;
+    padding: 3rem 2rem;
     background: var(--card-bg);
-    padding: 2rem 1rem;
-    border-radius: 8px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    min-height: 400px;
   }
 
-  .timeline-axis {
-    position: relative;
-    height: 100%;
-  }
-
+  /* Main timeline line */
   .timeline-line {
     position: absolute;
-    top: 30px;
-    left: 0;
-    right: 0;
-    height: 2px;
+    top: 50%;
+    left: 2rem;
+    right: 2rem;
+    height: 3px;
     background: linear-gradient(
       to right,
       rgba(99, 102, 241, 0.2),
       rgba(99, 102, 241, 0.5),
       rgba(99, 102, 241, 0.2)
     );
+    transform: translateY(-50%);
+    z-index: 1;
   }
 
-  .timeline-event {
+  /* Year markers along timeline */
+  .timeline-years {
     position: absolute;
+    top: 50%;
+    left: 2rem;
+    right: 2rem;
+    height: 1px;
+    transform: translateY(-50%);
+    z-index: 0;
+  }
+
+  .year-marker {
+    position: absolute;
+    top: 1.5rem;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  /* Events container */
+  .timeline-events {
+    position: relative;
+    height: 100%;
+    min-height: 350px;
+  }
+
+  /* Individual event */
+  .event {
+    position: absolute;
+    top: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 1px;
+    transform: translateX(-50%);
+    width: 180px;
+    z-index: 2;
   }
 
-  .event-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--accent);
-    border: 2px solid var(--bg);
-    box-shadow: 0 0 0 2px var(--accent-light);
-    margin-top: 25px;
-    z-index: 2;
-    transition: all 0.2s;
+  .event.above {
+    flex-direction: column-reverse;
+    top: auto;
+    bottom: 55%;
+  }
+
+  .event.below {
+    top: 55%;
+  }
+
+  /* Entity box */
+  .entity-box {
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 1rem;
+    width: 100%;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+    transition: all 0.3s;
     cursor: pointer;
   }
 
-  .timeline-event:hover .event-dot {
-    width: 14px;
-    height: 14px;
-    margin-top: 23px;
-    box-shadow: 0 0 0 3px var(--accent-light);
+  .event:hover .entity-box {
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
+    transform: scale(1.05);
   }
 
-  .event-popup {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--bg);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 0.75rem;
-    white-space: nowrap;
-    font-size: 0.85rem;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
-    margin-bottom: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: 10;
-  }
-
-  .timeline-event:hover .event-popup {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .popup-year {
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 0.25rem;
-  }
-
-  .popup-claim {
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-    max-width: 200px;
-    white-space: normal;
-  }
-
-  .popup-paper {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-bottom: 0.25rem;
-  }
-
-  .popup-relation {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-bottom: 0.25rem;
-  }
-
-  .popup-finding {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
-    border-radius: 3px;
-    font-weight: 600;
-  }
-
-  .timeline-labels {
+  .entity-header {
     display: flex;
     justify-content: space-between;
-    margin-top: 1rem;
-    padding: 0 1rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .entity-type {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+    background: rgba(99, 102, 241, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+  }
+
+  .entity-year {
     font-size: 0.85rem;
-    color: var(--text-muted);
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .entity-name {
+    font-size: 0.95rem;
     font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
-  .timeline-details {
+  .entity-paper {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .entity-finding {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.4rem 0.6rem;
+    background: rgba(99, 102, 241, 0.05);
+    border-left: 3px solid var(--accent);
+    margin: 0.5rem 0;
+    border-radius: 3px;
+  }
+
+  .entity-link {
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+
+  .entity-link:hover {
+    transform: translateX(2px);
+  }
+
+  /* Connector line */
+  .connector {
+    width: 2px;
+    height: 1rem;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    margin: -0.5rem 0;
+  }
+
+  .event.above .connector {
+    background: linear-gradient(to top, var(--accent), transparent);
+    margin: -0.5rem 0;
+  }
+
+  /* Timeline dot */
+  .dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--card-bg), 0 0 8px rgba(99, 102, 241, 0.3);
+    transition: all 0.3s;
+    position: relative;
+    z-index: 3;
+  }
+
+  .event:hover .dot {
+    width: 18px;
+    height: 18px;
+    box-shadow: 0 0 0 3px var(--card-bg), 0 0 12px rgba(99, 102, 241, 0.5);
+  }
+
+  /* Summary section */
+  .timeline-summary {
     margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
   }
 
-  .timeline-details h3 {
+  .timeline-summary h3 {
     font-size: 1.1rem;
     margin-bottom: 1.5rem;
   }
 
-  .timeline-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
   }
 
-  .timeline-item {
-    display: grid;
-    grid-template-columns: 60px 1fr;
-    gap: 1.5rem;
-    padding: 1rem;
+  .summary-card {
     background: var(--card-bg);
-    border-left: 3px solid var(--accent);
+    padding: 1rem;
+    border-left: 4px solid var(--accent);
     border-radius: 6px;
     transition: all 0.2s;
   }
 
-  .timeline-item:hover {
+  .summary-card:hover {
     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
   }
 
-  .item-year {
+  .summary-year {
+    font-size: 0.9rem;
     font-weight: 700;
     color: var(--accent);
-    font-size: 1.1rem;
-    text-align: center;
+    margin-bottom: 0.5rem;
   }
 
-  .item-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .item-claim {
+  .summary-claim {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-weight: 600;
+    margin-bottom: 0.5rem;
   }
 
-  .item-claim a {
+  .summary-claim a {
+    font-weight: 600;
     color: var(--accent);
     text-decoration: none;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  .item-claim a:hover {
+  .summary-claim a:hover {
     text-decoration: underline;
   }
 
-  .item-kind {
-    font-size: 0.75rem;
-    font-weight: 600;
+  .summary-type {
+    font-size: 0.7rem;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: var(--text-muted);
     background: var(--bg);
     padding: 0.25rem 0.5rem;
     border-radius: 3px;
+    white-space: nowrap;
   }
 
-  .item-paper {
-    font-size: 0.95rem;
+  .summary-paper {
+    font-size: 0.85rem;
     color: var(--text-primary);
-    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
   }
 
-  .item-paper a {
+  .summary-paper a {
     color: inherit;
     text-decoration: none;
     border-bottom: 1px solid var(--accent);
   }
 
-  .item-paper a:hover {
+  .summary-paper a:hover {
     color: var(--accent);
   }
 
-  .item-paper em {
-    font-style: italic;
-    color: var(--text-muted);
-  }
-
-  .item-relation {
-    font-size: 0.9rem;
+  .summary-relation {
+    font-size: 0.8rem;
     color: var(--text-muted);
     font-style: italic;
+    margin-bottom: 0.5rem;
   }
 
-  .item-finding {
-    font-size: 0.9rem;
-    padding: 0.5rem 0.75rem;
-    border-radius: 4px;
+  .summary-finding {
+    font-size: 0.8rem;
     font-weight: 600;
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+    text-transform: capitalize;
   }
 
-  .item-finding-supports {
+  .summary-finding.finding-supports {
     background: #d1fae5;
     color: #059669;
   }
 
-  .item-finding-refutes {
+  .summary-finding.finding-refutes {
     background: #fee2e2;
     color: #dc2626;
   }
 
-  .item-finding-mixed {
+  .summary-finding.finding-mixed {
     background: #fef3c7;
     color: #b45309;
   }
 
-  .item-finding-n/a {
-    display: none;
+  /* Responsive */
+  @media (max-width: 768px) {
+    .timeline-container {
+      padding: 2rem 1rem;
+      min-height: 600px;
+    }
+
+    .entity-box {
+      width: 150px;
+      padding: 0.75rem;
+    }
+
+    .entity-name {
+      font-size: 0.85rem;
+    }
+
+    .year-marker {
+      font-size: 0.7rem;
+    }
+
+    .summary-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
