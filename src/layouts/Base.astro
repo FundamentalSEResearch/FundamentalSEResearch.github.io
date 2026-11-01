@@ -25,7 +25,7 @@ const isCurrent = (href: string) => (href === '/' ? path === url('/') : path.sta
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title === 'Software Engineering Theories' ? title : `${title} · SE Theories`}</title>
+    <title>{title === 'Software Engineering Theory' ? title : `${title} · SE Theory`}</title>
     <meta name="description" content={description} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -35,7 +35,7 @@ const isCurrent = (href: string) => (href === '/' ? path === url('/') : path.sta
   <body>
     <header class="site">
       <div class="wrap">
-        <a class="brand" href={url('/')}>Software Engineering Theories</a>
+        <a class="brand" href={url('/')}>Software Engineering Theory</a>
         <nav>
           {nav.map(([href, label]) => (
             <a href={url(href)} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>

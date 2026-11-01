@@ -1,10 +1,10 @@
-# Software Engineering Theories
+# Software Engineering Theory
 
 An open, evidence-based catalog of **fundamental questions in software engineering**, the **laws** (what happens) and **theories** (why it happens) proposed to answer them, and the **published evidence** for and against each.
 
 Question → Laws & theories → Evidence (paper + method + finding)
 
-- Site: https://software-engineering-theories.github.io
+- Site: https://software-engineering-research.github.io
 - Data: [`src/content/`](src/content/), also available at `/api.json`
 - Contributing: see [CONTRIBUTING.md](CONTRIBUTING.md)
 
