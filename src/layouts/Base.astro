@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ThemeSwitcher from '../components/ThemeSwitcher.astro';
 import { url } from '../lib/graph';
 
 interface Props {
@@ -40,6 +41,7 @@ const isCurrent = (href: string) => (href === '/' ? path === url('/') : path.sta
             <a href={url(href)} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>
           ))}
         </nav>
+        <ThemeSwitcher />
       </div>
     </header>
     <main class="wrap">

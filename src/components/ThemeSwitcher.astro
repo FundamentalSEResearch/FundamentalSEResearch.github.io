@@ -1,0 +1,142 @@
+---
+// Theme Switcher Component
+---
+
+<div class="theme-switcher">
+  <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Light theme">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </button>
+  <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Dark theme">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+  <button class="theme-btn" data-theme="system" title="System theme" aria-label="System theme">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+      <line x1="2" y1="20" x2="22" y2="20"></line>
+    </svg>
+  </button>
+</div>
+
+<script>
+  const THEME_KEY = 'se-theme';
+  const THEMES = ['light', 'dark', 'system'];
+
+  function getSystemTheme(): 'light' | 'dark' {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function applyTheme(theme: string) {
+    const html = document.documentElement;
+
+    if (theme === 'system') {
+      html.removeAttribute('data-theme');
+      const systemTheme = getSystemTheme();
+      html.style.colorScheme = systemTheme;
+    } else {
+      html.setAttribute('data-theme', theme);
+      html.style.colorScheme = theme;
+    }
+
+    localStorage.setItem(THEME_KEY, theme);
+  }
+
+  function initTheme() {
+    const stored = localStorage.getItem(THEME_KEY) || 'system';
+    applyTheme(stored);
+    updateActiveButton(stored);
+  }
+
+  function updateActiveButton(theme: string) {
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
+    });
+  }
+
+  // Initialize theme on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTheme);
+  } else {
+    initTheme();
+  }
+
+  // Add click handlers to theme buttons
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const theme = btn.getAttribute('data-theme');
+      if (theme) {
+        applyTheme(theme);
+        updateActiveButton(theme);
+      }
+    });
+  });
+
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    const theme = localStorage.getItem(THEME_KEY) || 'system';
+    if (theme === 'system') {
+      applyTheme('system');
+    }
+  });
+</script>
+
+<style>
+  .theme-switcher {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .theme-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.2s ease;
+    padding: 0;
+  }
+
+  .theme-btn:hover {
+    color: var(--text);
+    border-color: var(--accent);
+  }
+
+  .theme-btn.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  @media (max-width: 640px) {
+    .theme-switcher {
+      gap: 2px;
+    }
+
+    .theme-btn {
+      width: 28px;
+      height: 28px;
+    }
+
+    .theme-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+</style>
