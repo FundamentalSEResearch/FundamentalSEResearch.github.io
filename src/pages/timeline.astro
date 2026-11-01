@@ -1,0 +1,227 @@
+---
+import Base from '../layouts/Base.astro';
+import QuestionTimeline from '../components/QuestionTimeline.astro';
+import { getCollection } from 'astro:content';
+
+// Get all questions and papers
+const questions = await getCollection('questions');
+const papers = await getCollection('papers');
+
+// Build evidence map from papers
+const evidenceByQuestion = new Map<string, any[]>();
+
+papers.forEach(paper => {
+  const paperData = paper.data;
+  if (paperData.evidence) {
+    paperData.evidence.forEach((ev: any) => {
+      const questionId = typeof ev.question === 'object' ? ev.question.id : ev.question;
+      if (questionId) {
+        if (!evidenceByQuestion.has(questionId)) {
+          evidenceByQuestion.set(questionId, []);
+        }
+        evidenceByQuestion.get(questionId)?.push({
+          year: paperData.year,
+          title: paperData.title,
+          paper: paper.id,
+          type: ev.law ? 'law' : 'theory',
+          relation: ev.relation,
+        });
+      }
+    });
+  }
+});
+
+// Sort questions by evidence count and area
+const questionsWithTimeline = questions
+  .map(q => ({
+    id: q.id,
+    data: q.data,
+    evidence: (evidenceByQuestion.get(q.id) || []).sort((a: any, b: any) => a.year - b.year),
+  }))
+  .filter(q => q.evidence.length > 0)
+  .sort((a, b) => b.evidence.length - a.evidence.length);
+---
+
+<Base title="Question Timelines" description="How fundamental software engineering questions have been gradually solved over decades">
+  <main class="timeline-page">
+    <header class="page-header">
+      <h1>Question Timelines</h1>
+      <p class="subtitle">
+        How fundamental software engineering questions have been gradually solved
+      </p>
+      <div class="timeline-stats">
+        <div class="stat">
+          <div class="stat-value">{questionsWithTimeline.length}</div>
+          <div class="stat-label">Questions</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">{papers.length}</div>
+          <div class="stat-label">Papers</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">
+            {Math.max(...papers.map(p => p.data.year)) - Math.min(...papers.map(p => p.data.year))}
+          </div>
+          <div class="stat-label">Years of Research</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="timelines-grid">
+      {questionsWithTimeline.map(question => (
+        <section class={`timeline-section area-${question.data.area}`}>
+          <QuestionTimeline
+            question={question.data}
+            evidence={question.evidence}
+          />
+        </section>
+      ))}
+    </div>
+
+    <section class="methodology">
+      <h2>Understanding the Timeline</h2>
+      <div class="methodology-content">
+        <div class="method-card">
+          <h3>Timeline Span</h3>
+          <p>Shows the earliest and most recent papers examining each question. Earlier dates don't mean the question wasn't asked earlier—it means this is the earliest published empirical evidence we've collected.</p>
+        </div>
+        <div class="method-card">
+          <h3>Evidence Points</h3>
+          <p>Each point represents a published paper that provides evidence about the question, through one or more <strong>laws</strong> (what happens) or <strong>theories</strong> (why it happens).</p>
+        </div>
+        <div class="method-card">
+          <h3>Gradual Solving</h3>
+          <p>No question has a single "answer." Instead, research gradually refines our understanding through multiple papers, methods, and contexts. Dense clusters mean a question has received significant attention.</p>
+        </div>
+      </div>
+    </section>
+
+    {questionsWithTimeline.length === 0 && (
+      <div class="no-data">
+        <p>No questions with evidence found yet. Check back soon!</p>
+      </div>
+    )}
+  </main>
+</Base>
+
+<style>
+  .timeline-page {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem 1rem;
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .timeline-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .timelines-grid {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .timeline-section {
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border-radius: 12px;
+    border-left: 4px solid var(--accent);
+  }
+
+  .timeline-section.area-planning {
+    --accent: #3b82f6;
+  }
+
+  .timeline-section.area-coordination {
+    --accent: #8b5cf6;
+  }
+
+  .timeline-section.area-design {
+    --accent: #ec4899;
+  }
+
+  .timeline-section.area-evolution {
+    --accent: #14b8a6;
+  }
+
+  .timeline-section.area-quality {
+    --accent: #f59e0b;
+  }
+
+  .methodology {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-top: 4rem;
+  }
+
+  .methodology h2 {
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+  }
+
+  .methodology-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .method-card {
+    padding: 1.5rem;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+  }
+
+  .method-card h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+  }
+
+  .method-card p {
+    margin: 0;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .method-card strong {
+    color: var(--text-primary);
+  }
+</style>
