@@ -1,6 +1,6 @@
-# Software Engineering Theory
+# Fundamental SE Research Questions
 
-An open, evidence-based catalog of **fundamental questions in software engineering**, the **laws** (what happens) and **theories** (why it happens) proposed to answer them, and the **published evidence** for and against each.
+An open, evidence-based catalog of **fundamental scientific questions in software engineering**, the **laws** (what happens) and **theories** (why it happens) proposed to answer them, and the **published evidence** for and against each.
 
 Question → Laws & theories → Evidence (paper + method + finding)
 
