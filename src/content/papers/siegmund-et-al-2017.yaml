@@ -1,0 +1,15 @@
+title: Measuring Neural Efficiency of Program Comprehension
+authors: ["Siegmund, J.", "Peitek, N.", "Parnin, C.", "Apel, S.", "Hofmeister, J.", "Kästner, C.", "Begel, A.", "Bethmann, A.", "Brechmann, A."]
+year: 2017
+venue: ESEC/FSE 2017
+type: conference
+doi: 10.1145/3106237.3106268
+evidence:
+  - question: how-developers-comprehend-code
+    theory: top-down-program-comprehension
+    relation: tests
+    finding: supports
+    methods: [controlled-experiment]
+    context: { setting: laboratory, participants: students, domain: software }
+    propositions: [beacons]
+    note: In an fMRI study with eleven participants, comprehension aided by semantic cues (beacons) required less brain activation than bottom-up comprehension, indicating that beacons make comprehension more efficient; a follow-up study by the same group did not find a significant beacon effect.

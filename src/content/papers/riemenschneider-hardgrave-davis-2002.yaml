@@ -1,0 +1,15 @@
+title: "Explaining Software Developer Acceptance of Methodologies: A Comparison of Five Theoretical Models"
+authors: ["Riemenschneider, C. K.", "Hardgrave, B. C.", "Davis, F. D."]
+year: 2002
+venue: IEEE Transactions on Software Engineering 28(12)
+type: journal
+doi: 10.1109/TSE.2002.1158287
+evidence:
+  - question: why-developers-adopt-methods
+    theory: technology-acceptance-model
+    relation: tests
+    finding: mixed
+    methods: [survey]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [usefulness-intention]
+    note: In a field study of 128 developers in an organization introducing a methodology, perceived usefulness mattered, but intentions were driven largely by factors outside core TAM, namely an organizational mandate, compatibility with how developers work, and the opinions of coworkers and supervisors; no single model captured all the key determinants.

@@ -1,0 +1,14 @@
+title: "Secure Open Source Collaboration: An Empirical Study of Linus' Law"
+authors: ["Meneely, A.", "Williams, L."]
+year: 2009
+venue: ACM Conference on Computer and Communications Security (CCS 2009)
+type: conference
+doi: 10.1145/1653662.1653717
+evidence:
+  - question: do-more-reviewers-mean-fewer-defects
+    law: linus-law
+    relation: tests
+    finding: mixed
+    methods: [mining-software-repositories, case-study]
+    context: { setting: open-source, participants: professionals, domain: software }
+    note: In the Red Hat Enterprise Linux 4 kernel, files changed by many developers were much more likely to contain vulnerabilities, contrary to a simple many-eyes reading, while files worked on by otherwise unconnected developer groups were also more vulnerable, which the authors read as consistent with Linus's Law.

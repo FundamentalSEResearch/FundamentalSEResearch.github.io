@@ -1,0 +1,15 @@
+title: A Second Replicated Quantitative Analysis of Fault Distributions in Complex Software Systems
+authors: ["Galinac Grbac, T.", "Runeson, P.", "Huljenić, D."]
+year: 2013
+venue: IEEE Transactions on Software Engineering 39(4)
+type: journal
+doi: 10.1109/TSE.2012.46
+evidence:
+  - question: where-defects-concentrate
+    law: pareto-distribution-of-faults
+    relation: tests
+    finding: supports
+    methods: [mining-software-repositories, case-study]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [concentration, persistence]
+    note: A literal replication on five releases of a large telecommunications system confirmed that faults are unevenly distributed over modules and found that fault-proneness persisted across test phases; size measures were not useful predictors.

@@ -1,0 +1,15 @@
+title: Stimulus Structures and Mental Representations in Expert Comprehension of Computer Programs
+authors: ["Pennington, N."]
+year: 1987
+venue: Cognitive Psychology 19(3)
+type: journal
+doi: 10.1016/0010-0285(87)90007-7
+evidence:
+  - question: how-developers-comprehend-code
+    theory: top-down-program-comprehension
+    relation: tests
+    finding: refutes
+    methods: [controlled-experiment]
+    context: { setting: laboratory, participants: professionals, domain: software }
+    propositions: [hypothesis-driven]
+    note: With eighty professional programmers reading short programs, procedural relations (control flow) rather than functional relations dominated their early mental representations, contrary to the claim that experts start from hypotheses about the program's purpose; domain-level representations formed later and depended on the task.

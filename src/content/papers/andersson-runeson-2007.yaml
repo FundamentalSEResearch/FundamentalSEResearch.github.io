@@ -1,0 +1,15 @@
+title: A Replicated Quantitative Analysis of Fault Distributions in Complex Software Systems
+authors: ["Andersson, C.", "Runeson, P."]
+year: 2007
+venue: IEEE Transactions on Software Engineering 33(5)
+type: journal
+doi: 10.1109/TSE.2007.1005
+evidence:
+  - question: where-defects-concentrate
+    law: pareto-distribution-of-faults
+    relation: tests
+    finding: supports
+    methods: [mining-software-repositories, case-study]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [concentration]
+    note: Replicating Fenton and Ohlsson on three successive telecommunications projects, found that faults were again concentrated in a minority of modules, with broadly stable fault densities across phases and projects.

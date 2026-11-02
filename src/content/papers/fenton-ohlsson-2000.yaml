@@ -1,0 +1,23 @@
+title: Quantitative Analysis of Faults and Failures in a Complex Software System
+authors: ["Fenton, N. E.", "Ohlsson, N."]
+year: 2000
+venue: IEEE Transactions on Software Engineering 26(8)
+type: journal
+doi: 10.1109/32.879815
+evidence:
+  - question: where-defects-concentrate
+    law: pareto-distribution-of-faults
+    relation: tests
+    finding: supports
+    methods: [mining-software-repositories, case-study]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [concentration]
+    note: In two releases of a large telecommunications system, a small share of modules accounted for most pre-release faults, but the concentration was not explained by module size.
+  - question: where-defects-concentrate
+    law: pareto-distribution-of-faults
+    relation: tests
+    finding: refutes
+    methods: [mining-software-repositories, case-study]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [persistence]
+    note: The modules that were most fault-prone in pre-release testing were among the least fault-prone in operation, contradicting the expectation that fault-proneness carries over from testing to the field.
