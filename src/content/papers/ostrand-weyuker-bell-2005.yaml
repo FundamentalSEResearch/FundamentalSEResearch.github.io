@@ -1,0 +1,15 @@
+title: Predicting the Location and Number of Faults in Large Software Systems
+authors: ["Ostrand, T. J.", "Weyuker, E. J.", "Bell, R. M."]
+year: 2005
+venue: IEEE Transactions on Software Engineering 31(4)
+type: journal
+doi: 10.1109/TSE.2005.49
+evidence:
+  - question: where-defects-concentrate
+    law: pareto-distribution-of-faults
+    relation: applies
+    finding: supports
+    methods: [mining-software-repositories]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [concentration, persistence]
+    note: Across many releases of two industrial systems, a model using size, change history, and previous-release faults ranked files so that the top 20% contained roughly 71% to 92% of the faults in the next release, showing both concentration and carry-over from earlier releases.

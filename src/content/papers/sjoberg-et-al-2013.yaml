@@ -1,0 +1,15 @@
+title: Quantifying the Effect of Code Smells on Maintenance Effort
+authors: ["Sjøberg, D. I. K.", "Yamashita, A.", "Anda, B. C. D.", "Mockus, A.", "Dybå, T."]
+year: 2013
+venue: IEEE Transactions on Software Engineering 39(8)
+type: journal
+doi: 10.1109/TSE.2012.89
+evidence:
+  - question: do-code-smells-harm-maintainability
+    law: code-smell-hypothesis
+    relation: tests
+    finding: refutes
+    methods: [case-study]
+    context: { setting: laboratory, participants: professionals, domain: software }
+    propositions: [maintenance-effort]
+    note: Six professional developers each performed maintenance tasks on four functionally equivalent Java systems while their time per file was measured; after adjusting for file size and number of changes, none of 12 smells was associated with more effort, and one was associated with less.

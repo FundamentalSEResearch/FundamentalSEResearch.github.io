@@ -1,0 +1,15 @@
+title: "Understanding the Motivations, Participation, and Performance of Open Source Software Developers: A Longitudinal Study of the Apache Projects"
+authors: ["Roberts, J. A.", "Hann, I.-H.", "Slaughter, S. A."]
+year: 2006
+venue: Management Science 52(7)
+type: journal
+doi: 10.1287/mnsc.1060.0554
+evidence:
+  - question: what-motivates-developers
+    theory: self-determination-theory
+    relation: tests
+    finding: refutes
+    methods: [survey, mining-software-repositories]
+    context: { setting: open-source, participants: professionals, domain: software }
+    propositions: [crowding-out]
+    note: Combining surveys with archival data from the Apache projects, found no evidence that extrinsic motivations reduced intrinsic motivation; status motivations instead enhanced it, and being paid was associated with higher contribution levels.

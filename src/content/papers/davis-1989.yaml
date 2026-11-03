@@ -1,0 +1,14 @@
+title: Perceived Usefulness, Perceived Ease of Use, and User Acceptance of Information Technology
+authors: ["Davis, F. D."]
+year: 1989
+venue: MIS Quarterly 13(3)
+type: journal
+doi: 10.2307/249008
+evidence:
+  - question: why-developers-adopt-methods
+    theory: technology-acceptance-model
+    relation: proposes
+    finding: n/a
+    methods: [survey]
+    propositions: [usefulness-intention, ease-intention]
+    note: Develops and validates scales for perceived usefulness and perceived ease of use, finds that usefulness relates more strongly to use than ease of use does, and suggests that ease of use acts partly through usefulness.

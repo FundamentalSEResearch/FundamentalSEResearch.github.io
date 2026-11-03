@@ -1,0 +1,14 @@
+title: Distance Matters
+authors: ["Olson, G. M.", "Olson, J. S."]
+year: 2000
+venue: Human-Computer Interaction 15(2-3)
+type: journal
+doi: 10.1207/S15327051HCI1523_4
+evidence:
+  - question: does-distance-harm-collaboration
+    theory: distance-matters
+    relation: proposes
+    finding: n/a
+    methods: [systematic-literature-review]
+    propositions: [distance-slows, distance-degrades-quality]
+    note: Synthesizes more than a decade of field and laboratory studies of co-located and remote group work into four concepts (common ground, coupling of work, collaboration readiness, and technology readiness) that determine when distance can be overcome.

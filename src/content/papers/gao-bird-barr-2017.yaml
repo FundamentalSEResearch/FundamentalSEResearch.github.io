@@ -1,0 +1,15 @@
+title: "To Type or Not to Type: Quantifying Detectable Bugs in JavaScript"
+authors: ["Gao, Z.", "Bird, C.", "Barr, E. T."]
+year: 2017
+venue: ICSE 2017
+type: conference
+doi: 10.1109/ICSE.2017.75
+evidence:
+  - question: does-language-affect-defects
+    law: programming-language-defect-effect
+    relation: tests
+    finding: supports
+    methods: [mining-software-repositories, controlled-experiment]
+    context: { setting: open-source, participants: none, domain: software }
+    propositions: [static-typing-fewer-defects]
+    note: Adding type annotations to the code just before 400 fixed public JavaScript bugs showed that both Flow and TypeScript would have detected about 15% of them.

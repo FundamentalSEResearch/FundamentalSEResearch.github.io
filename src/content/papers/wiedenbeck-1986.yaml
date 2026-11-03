@@ -1,0 +1,15 @@
+title: Beacons in Computer Program Comprehension
+authors: ["Wiedenbeck, S."]
+year: 1986
+venue: International Journal of Man-Machine Studies 25(6)
+type: journal
+doi: 10.1016/S0020-7373(86)80083-9
+evidence:
+  - question: how-developers-comprehend-code
+    theory: top-down-program-comprehension
+    relation: tests
+    finding: supports
+    methods: [controlled-experiment]
+    context: { setting: laboratory, participants: mixed, domain: software }
+    propositions: [beacons]
+    note: Experienced programmers recalled the key lines that signal a program's function (beacons) far better than other lines, and better than novices did, suggesting that comprehension is non-linear and anchored on beacons.

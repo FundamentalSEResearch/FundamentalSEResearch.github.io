@@ -1,0 +1,15 @@
+title: "The FreeBSD Project: A Replication Case Study of Open Source Development"
+authors: ["Dinh-Trong, T. T.", "Bieman, J. M."]
+year: 2005
+venue: IEEE Transactions on Software Engineering 31(6)
+type: journal
+doi: 10.1109/TSE.2005.73
+evidence:
+  - question: how-open-source-work-is-distributed
+    law: core-periphery-concentration
+    relation: tests
+    finding: mixed
+    methods: [mining-software-repositories, case-study]
+    context: { setting: open-source, participants: mixed, domain: software }
+    propositions: [small-core]
+    note: Replicating the Apache study on FreeBSD, found that work was concentrated but that 80% of the code came from a larger group of top developers than the hypothesized core of 10–15, while defect densities were similar to Apache's.

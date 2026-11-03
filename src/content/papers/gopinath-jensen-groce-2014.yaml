@@ -1,0 +1,14 @@
+title: Code Coverage for Suite Evaluation by Developers
+authors: ["Gopinath, R.", "Jensen, C.", "Groce, A."]
+year: 2014
+venue: ICSE 2014
+type: conference
+doi: 10.1145/2568225.2568278
+evidence:
+  - question: does-coverage-measure-test-quality
+    law: coverage-effectiveness
+    relation: tests
+    finding: supports
+    methods: [controlled-experiment, mining-software-repositories]
+    context: { setting: open-source, participants: none, domain: software }
+    note: Across test suites from a large set of open source projects, coverage predicted how many mutants a suite killed, with statement coverage the best predictor among the criteria compared.

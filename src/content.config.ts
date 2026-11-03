@@ -7,6 +7,8 @@ export const AREAS = {
   planning: 'Estimation & Planning',
   evolution: 'Software Evolution',
   design: 'Design & Development Process',
+  quality: 'Software Quality',
+  people: 'Developers & Human Factors',
 } as const;
 
 // The discipline a law or theory originated in. Most theories used in SE come from elsewhere (Hannay et al. 2007).
@@ -16,6 +18,9 @@ export const DISCIPLINES = {
   'organization-science': 'Organization science',
   economics: 'Economics',
   'design-research': 'Design research',
+  'information-systems': 'Information systems',
+  'human-computer-interaction': 'Human–computer interaction',
+  'learning-sciences': 'Learning sciences',
 } as const;
 
 // How a claim entered software engineering (Sjøberg et al. 2008): built in SE, used as-is, or modified for SE.

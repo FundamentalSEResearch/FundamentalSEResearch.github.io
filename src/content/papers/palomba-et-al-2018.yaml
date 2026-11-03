@@ -1,0 +1,15 @@
+title: "On the Diffuseness and the Impact on Maintainability of Code Smells: A Large Scale Empirical Investigation"
+authors: ["Palomba, F.", "Bavota, G.", "Di Penta, M.", "Fasano, F.", "Oliveto, R.", "De Lucia, A."]
+year: 2018
+venue: Empirical Software Engineering 23(3)
+type: journal
+doi: 10.1007/s10664-017-9535-z
+evidence:
+  - question: do-code-smells-harm-maintainability
+    law: code-smell-hypothesis
+    relation: tests
+    finding: supports
+    methods: [mining-software-repositories]
+    context: { setting: open-source, participants: mixed, domain: software }
+    propositions: [change-proneness, fault-proneness]
+    note: Using over 17,000 manually validated smell instances in 395 releases of 30 open source projects, found that classes affected by smells were more change- and fault-prone than smell-free classes, with smells tied to long or complex code being the most common.

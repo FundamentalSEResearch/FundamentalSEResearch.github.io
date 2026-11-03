@@ -1,0 +1,14 @@
+title: "Two Case Studies of Open Source Software Development: Apache and Mozilla"
+authors: ["Mockus, A.", "Fielding, R. T.", "Herbsleb, J. D."]
+year: 2002
+venue: ACM Transactions on Software Engineering and Methodology 11(3)
+type: journal
+doi: 10.1145/567793.567795
+evidence:
+  - question: how-open-source-work-is-distributed
+    law: core-periphery-concentration
+    relation: proposes
+    finding: n/a
+    methods: [mining-software-repositories, case-study]
+    propositions: [small-core, wider-periphery]
+    note: From email archives, version control, and problem reports, found that about 15 Apache developers contributed over 80% of the code while many more reported problems, and stated this as hypotheses, which they then examined in Mozilla, where additional coordination mechanisms accompanied a larger core.

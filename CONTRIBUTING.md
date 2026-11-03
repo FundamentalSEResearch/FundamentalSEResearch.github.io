@@ -26,7 +26,7 @@ Both laws and theories state **propositions** (testable statements, each with an
 ```yaml
 # src/content/theories/socio-technical-congruence.md (frontmatter)
 name: Socio-Technical Congruence
-discipline: software-engineering   # software-engineering | psychology | organization-science | economics | design-research
+discipline: software-engineering   # software-engineering | psychology | organization-science | economics | design-research | information-systems | human-computer-interaction | learning-sciences
 adoption: native                   # native (only for software-engineering) | borrowed | adapted
 purpose: explanation-prediction    # theories: explanation | explanation-prediction; laws: description | prediction
 structure: variance                # theories only: variance | process

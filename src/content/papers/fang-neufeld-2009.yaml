@@ -1,0 +1,15 @@
+title: Understanding Sustained Participation in Open Source Software Projects
+authors: ["Fang, Y.", "Neufeld, D."]
+year: 2009
+venue: Journal of Management Information Systems 25(4)
+type: journal
+doi: 10.2753/MIS0742-1222250401
+evidence:
+  - question: how-newcomers-become-core-contributors
+    theory: legitimate-peripheral-participation
+    relation: applies
+    finding: supports
+    methods: [case-study]
+    context: { setting: open-source, participants: mixed, domain: software }
+    propositions: [learning-sustains-participation]
+    note: A longitudinal qualitative study of one open source community found that participants' initial conditions for joining did not predict long-term participation, whereas situated learning and identity construction were associated with sustained participation.

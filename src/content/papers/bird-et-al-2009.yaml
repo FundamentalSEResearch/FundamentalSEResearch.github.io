@@ -1,0 +1,15 @@
+title: "Does Distributed Development Affect Software Quality? An Empirical Case Study of Windows Vista"
+authors: ["Bird, C.", "Nagappan, N.", "Devanbu, P.", "Gall, H.", "Murphy, B."]
+year: 2009
+venue: ICSE 2009
+type: conference
+doi: 10.1109/ICSE.2009.5070550
+evidence:
+  - question: does-distance-harm-collaboration
+    theory: distance-matters
+    relation: tests
+    finding: refutes
+    methods: [mining-software-repositories, case-study]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [distance-degrades-quality]
+    note: In Windows Vista, binaries developed by distributed teams had only negligibly more post-release failures than those developed by co-located teams, and the difference shrank further when controlling for the number of developers.

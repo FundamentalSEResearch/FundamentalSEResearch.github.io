@@ -1,0 +1,15 @@
+title: Empirical Studies of Programming Knowledge
+authors: ["Soloway, E.", "Ehrlich, K."]
+year: 1984
+venue: IEEE Transactions on Software Engineering SE-10(5)
+type: journal
+doi: 10.1109/TSE.1984.5010283
+evidence:
+  - question: how-developers-comprehend-code
+    theory: top-down-program-comprehension
+    relation: tests
+    finding: supports
+    methods: [controlled-experiment]
+    context: { setting: laboratory, participants: students, domain: software }
+    propositions: [plan-knowledge]
+    note: Advanced programmers performed much better on programs that followed programming plans and rules of discourse than on versions that violated them, and lost most of their advantage over novices on the violating versions, indicating that comprehension relies on plan knowledge.

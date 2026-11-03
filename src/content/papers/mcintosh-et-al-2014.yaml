@@ -1,0 +1,14 @@
+title: "The Impact of Code Review Coverage and Code Review Participation on Software Quality: A Case Study of the Qt, VTK, and ITK Projects"
+authors: ["McIntosh, S.", "Kamei, Y.", "Adams, B.", "Hassan, A. E."]
+year: 2014
+venue: Working Conference on Mining Software Repositories (MSR 2014)
+type: conference
+doi: 10.1145/2597073.2597076
+evidence:
+  - question: do-more-reviewers-mean-fewer-defects
+    law: linus-law
+    relation: tests
+    finding: supports
+    methods: [mining-software-repositories, case-study]
+    context: { setting: open-source, participants: mixed, domain: software }
+    note: In three open source projects, components with low review coverage and especially low review participation had more post-release defects, consistent with the narrow claim that more reviewer attention leaves fewer defects.
