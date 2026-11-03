@@ -13,3 +13,11 @@ evidence:
     context: { setting: industrial, participants: professionals, domain: software }
     propositions: [boundary-cost]
     note: Using change-management data and surveys, found that work spanning multiple sites took substantially longer than same-site work, and that the delay was associated with more people being involved and weaker communication across sites.
+  - question: does-distance-harm-collaboration
+    theory: distance-matters
+    relation: tests
+    finding: supports
+    methods: [mining-software-repositories, survey]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [distance-slows]
+    note: Multi-site work items took substantially longer to complete than comparable single-site items, and developers reported weaker communication with distant colleagues, consistent with distance slowing coupled work.

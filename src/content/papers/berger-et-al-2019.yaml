@@ -1,0 +1,15 @@
+title: "On the Impact of Programming Languages on Code Quality: A Reproduction Study"
+authors: ["Berger, E. D.", "Hollenbeck, C.", "Maj, P.", "Vitek, O.", "Vitek, J."]
+year: 2019
+venue: ACM Transactions on Programming Languages and Systems 41(4)
+type: journal
+doi: 10.1145/3340571
+evidence:
+  - question: does-language-affect-defects
+    law: programming-language-defect-effect
+    relation: tests
+    finding: refutes
+    methods: [mining-software-repositories]
+    context: { setting: open-source, participants: none, domain: software }
+    propositions: [language-affects-defects]
+    note: Reproducing a large GitHub study of 17 languages, found data and statistical problems; after correcting them, most of the reported associations between languages and defects were no longer significant, and the remaining effects were small and correlational.

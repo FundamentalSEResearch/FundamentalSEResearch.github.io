@@ -1,0 +1,14 @@
+title: "Code Ownership and Software Quality: A Replication Study"
+authors: ["Greiler, M.", "Herzig, K.", "Czerwonka, J."]
+year: 2015
+venue: Working Conference on Mining Software Repositories (MSR 2015)
+type: conference
+doi: 10.1109/MSR.2015.8
+evidence:
+  - question: does-ownership-affect-quality
+    law: code-ownership-effect
+    relation: tests
+    finding: supports
+    methods: [mining-software-repositories]
+    context: { setting: industrial, participants: professionals, domain: software }
+    note: Replicating earlier ownership studies on four major Microsoft products, confirmed that ownership correlates with code quality, and showed that file- and directory-level ownership metrics can identify files containing bugs with a median precision of about 0.74.

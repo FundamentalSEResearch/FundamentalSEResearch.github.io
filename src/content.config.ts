@@ -19,6 +19,8 @@ export const DISCIPLINES = {
   economics: 'Economics',
   'design-research': 'Design research',
   'information-systems': 'Information systems',
+  'human-computer-interaction': 'Human–computer interaction',
+  'learning-sciences': 'Learning sciences',
 } as const;
 
 // How a claim entered software engineering (Sjøberg et al. 2008): built in SE, used as-is, or modified for SE.
