@@ -1,0 +1,23 @@
+title: "Quality, Productivity and Economic Benefits of Software Reuse: A Review of Industrial Studies"
+authors: ["Mohagheghi, P.", "Conradi, R."]
+year: 2007
+venue: Empirical Software Engineering 12(5)
+type: journal
+doi: 10.1007/s10664-007-9040-x
+evidence:
+  - question: does-reuse-pay-off
+    law: mcilroys-law
+    relation: reviews
+    finding: supports
+    methods: [systematic-literature-review]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [reuse-quality]
+    note: A review of eleven industrial studies found strong evidence that systematic reuse is associated with lower defect density and less effort spent fixing problems.
+  - question: does-reuse-pay-off
+    law: mcilroys-law
+    relation: reviews
+    finding: mixed
+    methods: [systematic-literature-review]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [reuse-productivity]
+    note: Evidence for higher productivity was only moderate and rested on few studies, and evidence on time to market and economic benefits was weak or inconsistent.

@@ -1,0 +1,14 @@
+title: Design and Code Inspections to Reduce Errors in Program Development
+authors: ["Fagan, M. E."]
+year: 1976
+venue: IBM Systems Journal 15(3)
+type: journal
+doi: 10.1147/sj.153.0182
+evidence:
+  - question: are-inspections-effective
+    law: fagans-law
+    relation: proposes
+    finding: n/a
+    methods: [case-study]
+    propositions: [inspections-pay-off, meeting-finds-defects]
+    note: Defines the formal inspection process and reports from IBM projects that design and code inspections increased net coding productivity by about 23% while catching errors before testing.

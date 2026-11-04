@@ -2,6 +2,7 @@ import { defineCollection, reference, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 export const AREAS = {
+  requirements: 'Requirements',
   teams: 'Teams & Coordination',
   organization: 'Organization & Architecture',
   planning: 'Estimation & Planning',

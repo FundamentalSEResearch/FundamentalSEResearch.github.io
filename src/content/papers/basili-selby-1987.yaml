@@ -1,0 +1,15 @@
+title: Comparing the Effectiveness of Software Testing Strategies
+authors: ["Basili, V. R.", "Selby, R. W."]
+year: 1987
+venue: IEEE Transactions on Software Engineering SE-13(12)
+type: journal
+doi: 10.1109/TSE.1987.232881
+evidence:
+  - question: which-verification-techniques-find-most-defects
+    law: hetzel-myers-law
+    relation: tests
+    finding: supports
+    methods: [controlled-experiment]
+    context: { setting: laboratory, participants: mixed, domain: software }
+    propositions: [techniques-complementary]
+    note: With 32 professionals and 42 students applying code reading, functional testing, and structural testing, code reading found the most faults for professionals, but the techniques differed in the kinds of faults they caught (interface faults by reading, control faults by functional testing) and results depended on the program.

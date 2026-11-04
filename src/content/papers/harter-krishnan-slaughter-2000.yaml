@@ -1,0 +1,22 @@
+title: Effects of Process Maturity on Quality, Cycle Time, and Effort in Software Product Development
+authors: ["Harter, D. E.", "Krishnan, M. S.", "Slaughter, S. A."]
+year: 2000
+venue: Management Science 46(4)
+type: journal
+doi: 10.1287/mnsc.46.4.451.12056
+evidence:
+  - question: does-process-maturity-improve-outcomes
+    law: humphreys-law
+    relation: tests
+    finding: supports
+    methods: [case-study]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [maturity-quality, maturity-productivity]
+    note: Across 30 software products at a large IT firm, higher process maturity was associated with higher quality; maturity directly added effort, but the quality gains reduced cycle time and effort by more, so the net effect of maturity was shorter cycle times and less effort.
+  - question: does-quality-cost-productivity
+    law: mills-jones-hypothesis
+    relation: tests
+    finding: supports
+    methods: [case-study]
+    context: { setting: industrial, participants: professionals, domain: software }
+    note: In the same 30 products, higher quality was associated with shorter cycle times and lower development effort, outweighing the extra effort that quality-oriented processes required.

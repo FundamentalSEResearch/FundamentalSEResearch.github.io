@@ -1,0 +1,14 @@
+title: Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity
+authors: ["Becker, J.", "Rush, N.", "Barnes, E.", "Rein, D."]
+year: 2025
+venue: arXiv preprint 2507.09089
+type: report
+url: https://arxiv.org/abs/2507.09089
+evidence:
+  - question: does-ai-assistance-speed-up-development
+    law: ai-assistance-productivity
+    relation: tests
+    finding: refutes
+    methods: [field-experiment]
+    context: { setting: open-source, participants: professionals, domain: software }
+    note: In a randomized controlled trial of 246 real issues in mature repositories that 16 experienced developers knew well, allowing AI tools increased completion time by 19%, although the developers expected, and afterwards believed, that AI had sped them up.

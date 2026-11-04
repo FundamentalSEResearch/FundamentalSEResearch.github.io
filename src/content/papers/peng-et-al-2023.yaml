@@ -1,0 +1,14 @@
+title: "The Impact of AI on Developer Productivity: Evidence from GitHub Copilot"
+authors: ["Peng, S.", "Kalliamvakou, E.", "Cihon, P.", "Demirer, M."]
+year: 2023
+venue: arXiv preprint 2302.06590
+type: report
+url: https://arxiv.org/abs/2302.06590
+evidence:
+  - question: does-ai-assistance-speed-up-development
+    law: ai-assistance-productivity
+    relation: tests
+    finding: supports
+    methods: [controlled-experiment]
+    context: { setting: laboratory, participants: professionals, domain: software }
+    note: In a randomized experiment in which developers implemented an HTTP server in JavaScript, those with access to GitHub Copilot finished 55.8% faster than the control group.

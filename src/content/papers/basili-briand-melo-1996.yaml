@@ -1,0 +1,15 @@
+title: A Validation of Object-Oriented Design Metrics as Quality Indicators
+authors: ["Basili, V. R.", "Briand, L. C.", "Melo, W. L."]
+year: 1996
+venue: IEEE Transactions on Software Engineering 22(10)
+type: journal
+doi: 10.1109/32.544352
+evidence:
+  - question: does-modular-design-reduce-defects
+    law: constantines-law
+    relation: tests
+    finding: supports
+    methods: [controlled-experiment]
+    context: { setting: laboratory, participants: students, domain: software }
+    propositions: [coupling-faults]
+    note: In eight medium-sized C++ systems developed to the same requirements, most object-oriented design metrics helped predict which classes were fault-prone, and coupling between objects was significantly associated with faults.

@@ -1,0 +1,15 @@
+title: Effects of Reuse on Quality, Productivity, and Economics
+authors: ["Lim, W. C."]
+year: 1994
+venue: IEEE Software 11(5)
+type: journal
+doi: 10.1109/52.311048
+evidence:
+  - question: does-reuse-pay-off
+    law: mcilroys-law
+    relation: tests
+    finding: supports
+    methods: [case-study]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [reuse-quality, reuse-productivity]
+    note: In two Hewlett-Packard reuse programs, defect density fell by 51% and 24% and productivity rose by 57% and 40%; time to market improved only where reuse was on the critical path, and reuse required investment in creating and maintaining assets.

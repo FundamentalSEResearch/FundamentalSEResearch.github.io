@@ -1,0 +1,13 @@
+title: "Partition Testing vs. Random Testing: The Influence of Uncertainty"
+authors: ["Gutjahr, W. J."]
+year: 1999
+venue: IEEE Transactions on Software Engineering 25(5)
+type: journal
+doi: 10.1109/32.815325
+evidence:
+  - question: is-systematic-testing-better-than-random
+    law: gutjahrs-hypothesis
+    relation: proposes
+    finding: n/a
+    methods: [simulation]
+    note: Modelling failure rates within subdomains as uncertain rather than known shows that partition testing is expected to detect faults with higher probability than random testing, by up to a factor equal to the number of subdomains.

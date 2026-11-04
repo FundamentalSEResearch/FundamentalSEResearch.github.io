@@ -1,0 +1,23 @@
+title: Impact of Developer Turnover on Quality in Open-Source Software
+authors: ["Foucault, M.", "Palyart, M.", "Blanc, X.", "Murphy, G. C.", "Falleri, J.-R."]
+year: 2015
+venue: ESEC/FSE 2015
+type: conference
+doi: 10.1145/2786805.2786870
+evidence:
+  - question: how-turnover-affects-quality
+    law: turnover-quality-effect
+    relation: tests
+    finding: supports
+    methods: [mining-software-repositories]
+    context: { setting: open-source, participants: mixed, domain: software }
+    propositions: [newcomers-defects]
+    note: Across five open source projects, modules with more activity by external newcomers had a higher density of bug-fixing commits.
+  - question: how-turnover-affects-quality
+    law: turnover-quality-effect
+    relation: tests
+    finding: refutes
+    methods: [mining-software-repositories]
+    context: { setting: open-source, participants: mixed, domain: software }
+    propositions: [leavers-defects]
+    note: In the same projects, activity by developers who later left showed no significant correlation with bug-fixing density.

@@ -1,0 +1,15 @@
+title: "Happy Software Developers Solve Problems Better: Psychological Measurements in Empirical Software Engineering"
+authors: ["Graziotin, D.", "Wang, X.", "Abrahamsson, P."]
+year: 2014
+venue: PeerJ 2:e289
+type: journal
+doi: 10.7717/peerj.289
+evidence:
+  - question: do-emotions-affect-developer-performance
+    theory: broaden-and-build
+    relation: tests
+    finding: supports
+    methods: [controlled-experiment]
+    context: { setting: laboratory, participants: students, domain: software }
+    propositions: [broadening]
+    note: In a study of 42 participants, those with a more positive affect balance scored significantly higher on an analytic problem-solving task; affect was measured rather than induced, so the result is correlational.

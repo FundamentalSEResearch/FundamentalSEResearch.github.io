@@ -1,0 +1,15 @@
+title: A Controlled Experiment in Program Testing and Code Walkthroughs/Inspections
+authors: ["Myers, G. J."]
+year: 1978
+venue: Communications of the ACM 21(9)
+type: journal
+doi: 10.1145/359588.359602
+evidence:
+  - question: which-verification-techniques-find-most-defects
+    law: hetzel-myers-law
+    relation: tests
+    finding: supports
+    methods: [controlled-experiment]
+    context: { setting: laboratory, participants: professionals, domain: software }
+    propositions: [techniques-complementary, combination-better]
+    note: Fifty-nine experienced programmers tested a small program using different methods; walkthroughs and inspections were about as effective as machine testing, methods differed in the error types they found, individuals varied enormously, and pooling the results of two people working independently was the most cost-effective approach.
