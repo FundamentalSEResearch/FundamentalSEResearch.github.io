@@ -8,7 +8,9 @@ const files = (await readdir(dir)).filter((f) => f.endsWith('.yaml'));
 // Transliterations differ (Jørgensen → Jorgensen, Sjøberg → Sjoeberg), so compare every variant.
 const variants = (s) =>
   ['o', 'oe'].map((o) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[øØ]/g, o).toLowerCase().replace(/[^a-z]/g, ''));
-const sameName = (a, b) => variants(a).some((x) => variants(b).some((y) => x.slice(0, 5) === y.slice(0, 5)));
+// Compound surnames (Méndez Fernández) are sometimes indexed under one part, so a containment match also counts.
+const sameName = (a, b) =>
+  variants(a).some((x) => variants(b).some((y) => x.slice(0, 5) === y.slice(0, 5) || x.includes(y) || y.includes(x)));
 
 async function crossref(doi) {
   for (let attempt = 0; ; attempt++) {
