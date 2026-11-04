@@ -13,7 +13,7 @@ const sameName = (a, b) => variants(a).some((x) => variants(b).some((y) => x.sli
 async function crossref(doi) {
   for (let attempt = 0; ; attempt++) {
     const res = await fetch(`https://api.crossref.org/works/${encodeURIComponent(doi)}`, {
-      headers: { 'User-Agent': 'software-engineering-theories (https://github.com/software-engineering-theories)' },
+      headers: { 'User-Agent': 'fundamental-se-research (https://github.com/FundamentalSEResearch)' },
     });
     if ((res.status !== 429 && res.status < 500) || attempt === 5) return res;
     await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));

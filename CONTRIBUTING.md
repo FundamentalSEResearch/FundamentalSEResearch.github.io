@@ -17,7 +17,7 @@ The catalog is organized **Question → Laws & Theories → Evidence**. Every cl
 - **Law**: states a regularity ("whenever X, then Y") without committing to why. Brooks' Law, Conway's Law, Lehman's Laws.
 - **Theory**: proposes concepts and a mechanism that explains something. Coordination Theory, Socio-Technical Congruence.
 
-Classify by what the claim *does*, not by its popular name. See the [About page](https://software-engineering-theories.github.io/about/) for the framework behind each field.
+Classify by what the claim *does*, not by its popular name. See the [About page](https://fundamentalseresearch.github.io/about/) for the framework behind each field.
 
 ### Describing a law or theory
 

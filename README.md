@@ -4,7 +4,7 @@ An open, evidence-based catalog of **fundamental scientific questions in softwar
 
 Question → Laws & theories → Evidence (paper + method + finding)
 
-- Site: https://software-engineering-research.github.io
+- Site: https://fundamentalseresearch.github.io
 - Data: [`src/content/`](src/content/), also available at `/api.json`
 - Contributing: see [CONTRIBUTING.md](CONTRIBUTING.md)
 

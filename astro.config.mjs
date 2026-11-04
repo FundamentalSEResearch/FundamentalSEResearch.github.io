@@ -2,6 +2,6 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://software-engineering-theories.github.io',
+  site: 'https://fundamentalseresearch.github.io',
   base: '/',
 });
