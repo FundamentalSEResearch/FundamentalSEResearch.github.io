@@ -1,0 +1,15 @@
+title: "Empirical Analysis of CK Metrics for Object-Oriented Design Complexity: Implications for Software Defects"
+authors: ["Subramanyam, R.", "Krishnan, M. S."]
+year: 2003
+venue: IEEE Transactions on Software Engineering 29(4)
+type: journal
+doi: 10.1109/TSE.2003.1191795
+evidence:
+  - question: does-modular-design-reduce-defects
+    law: constantines-law
+    relation: tests
+    finding: mixed
+    methods: [mining-software-repositories]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [coupling-faults]
+    note: In a commercial system with C++ and Java parts, a subset of design complexity metrics was associated with defects even after controlling for size, but which metrics mattered, and how, differed between the two languages.

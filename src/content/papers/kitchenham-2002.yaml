@@ -1,0 +1,14 @@
+title: The Question of Scale Economies in Software—Why Cannot Researchers Agree?
+authors: ["Kitchenham, B. A."]
+year: 2002
+venue: Information and Software Technology 44(1)
+type: journal
+doi: 10.1016/S0950-5849(01)00204-X
+evidence:
+  - question: does-productivity-fall-with-project-size
+    law: diseconomies-of-scale
+    relation: reviews
+    finding: mixed
+    methods: [systematic-literature-review]
+    context: { setting: industrial, participants: none, domain: software }
+    note: Examined why studies disagree on whether software development shows economies or diseconomies of scale, attributing the disagreement largely to methodological choices in datasets and statistical analysis, so the claim remains unresolved.

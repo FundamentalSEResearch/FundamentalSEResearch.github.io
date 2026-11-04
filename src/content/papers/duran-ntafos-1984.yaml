@@ -1,0 +1,14 @@
+title: An Evaluation of Random Testing
+authors: ["Duran, J. W.", "Ntafos, S. C."]
+year: 1984
+venue: IEEE Transactions on Software Engineering SE-10(4)
+type: journal
+doi: 10.1109/TSE.1984.5010257
+evidence:
+  - question: is-systematic-testing-better-than-random
+    law: gutjahrs-hypothesis
+    relation: tests
+    finding: refutes
+    methods: [simulation, controlled-experiment]
+    context: { setting: simulated, participants: none, domain: software }
+    note: Simulations suggested that random testing is often more cost-effective than partition testing, and experiments on real programs showed random testing to be a viable way of finding faults.

@@ -1,0 +1,14 @@
+title: Scale Economies in New Software Development
+authors: ["Banker, R. D.", "Kemerer, C. F."]
+year: 1989
+venue: IEEE Transactions on Software Engineering 15(10)
+type: journal
+doi: 10.1109/TSE.1989.559768
+evidence:
+  - question: does-productivity-fall-with-project-size
+    law: diseconomies-of-scale
+    relation: modifies
+    finding: mixed
+    methods: [mining-software-repositories]
+    context: { setting: industrial, participants: none, domain: software }
+    note: Proposed and applied a model in which returns to scale vary with project size, finding a most productive scale size that differs between environments; productivity rises with size below it and falls above it.

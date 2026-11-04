@@ -1,0 +1,15 @@
+title: Does Every Inspection Need a Meeting?
+authors: ["Votta, L. G."]
+year: 1993
+venue: ACM SIGSOFT Symposium on Foundations of Software Engineering (FSE 1993)
+type: conference
+doi: 10.1145/256428.167070
+evidence:
+  - question: are-inspections-effective
+    law: fagans-law
+    relation: tests
+    finding: refutes
+    methods: [case-study]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [meeting-finds-defects]
+    note: In design inspections at AT&T, only about 5% of the defects found were first discovered at the inspection meeting; most were found in individual preparation, so the meetings added little relative to their cost and scheduling delay.

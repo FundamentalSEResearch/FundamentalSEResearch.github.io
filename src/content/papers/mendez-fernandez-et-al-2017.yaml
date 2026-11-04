@@ -1,0 +1,14 @@
+title: "Naming the Pain in Requirements Engineering: Contemporary Problems, Causes, and Effects in Practice"
+authors: ["Méndez Fernández, D.", "Wagner, S.", "Kalinowski, M.", "Felderer, M.", "Mafra, P.", "Vetrò, A.", "Conte, T.", "Christiansson, M.-T.", "Greer, D.", "Lassenius, C.", "Männistö, T.", "Nayabi, M.", "Oivo, M.", "Penzenstadler, B.", "Pfahl, D.", "Prikladnicki, R.", "Ruhe, G.", "Schekelmann, A.", "Sen, S.", "Spínola, R.", "Tuzcu, A.", "de la Vara, J. L.", "Wieringa, R."]
+year: 2017
+venue: Empirical Software Engineering 22(5)
+type: journal
+doi: 10.1007/s10664-016-9451-7
+evidence:
+  - question: why-requirements-problems-derail-projects
+    law: glass-law
+    relation: tests
+    finding: supports
+    methods: [survey]
+    context: { setting: industrial, participants: professionals, domain: software }
+    note: A survey of 228 companies in ten countries found that incomplete or hidden requirements, communication flaws, and moving targets were the most common requirements problems, and practitioners linked them to time overruns, rework, poor quality, and project failure.

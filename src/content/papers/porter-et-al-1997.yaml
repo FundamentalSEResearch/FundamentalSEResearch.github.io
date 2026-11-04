@@ -1,0 +1,15 @@
+title: An Experiment to Assess the Cost-Benefits of Code Inspections in Large Scale Software Development
+authors: ["Porter, A. A.", "Siy, H. P.", "Toman, C. A.", "Votta, L. G."]
+year: 1997
+venue: IEEE Transactions on Software Engineering 23(6)
+type: journal
+doi: 10.1109/32.601071
+evidence:
+  - question: are-inspections-effective
+    law: fagans-law
+    relation: modifies
+    finding: mixed
+    methods: [field-experiment]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [inspections-pay-off]
+    note: Varying team size, number of sessions, and repair between sessions across about 88 inspections of a commercial product, found that none of these changes significantly affected how many defects were found, while some greatly lengthened the inspection interval, so the heavier variants of the process cost time without adding effectiveness.

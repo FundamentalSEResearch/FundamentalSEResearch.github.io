@@ -1,0 +1,14 @@
+title: "Requirements Problems in Twelve Software Companies: An Empirical Analysis"
+authors: ["Hall, T.", "Beecham, S.", "Rainer, A."]
+year: 2002
+venue: IEE Proceedings – Software 149(5)
+type: journal
+doi: "10.1049/ip-sen:20020694"
+evidence:
+  - question: why-requirements-problems-derail-projects
+    law: glass-law
+    relation: tests
+    finding: mixed
+    methods: [case-study]
+    context: { setting: industrial, participants: professionals, domain: software }
+    note: Across twelve companies, requirements problems were pervasive, but they were mostly organizational rather than technical and their pattern varied with process maturity; the study catalogues problems rather than showing that requirements are the leading cause of failure.

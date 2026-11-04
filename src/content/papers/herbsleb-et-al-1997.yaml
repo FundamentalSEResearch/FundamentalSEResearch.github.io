@@ -1,0 +1,15 @@
+title: Software Quality and the Capability Maturity Model
+authors: ["Herbsleb, J. D.", "Zubrow, D.", "Goldenson, D.", "Hayes, W.", "Paulk, M. C."]
+year: 1997
+venue: Communications of the ACM 40(6)
+type: journal
+doi: 10.1145/255656.255692
+evidence:
+  - question: does-process-maturity-improve-outcomes
+    law: humphreys-law
+    relation: reviews
+    finding: supports
+    methods: [case-study, survey]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [maturity-quality, maturity-productivity]
+    note: Synthesizing case studies and survey data from organizations that had undergone CMM-based improvement, reported that higher maturity was associated with better quality and productivity, though much of the data was self-selected and self-reported.

@@ -1,0 +1,23 @@
+title: Organizational Volatility and Its Effects on Software Defects
+authors: ["Mockus, A."]
+year: 2010
+venue: ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE 2010)
+type: conference
+doi: 10.1145/1882291.1882311
+evidence:
+  - question: how-turnover-affects-quality
+    law: turnover-quality-effect
+    relation: tests
+    finding: supports
+    methods: [mining-software-repositories, case-study]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [leavers-defects]
+    note: Combining organizational records with defect data from a large software organization, found that code changed close in time to developers leaving was associated with more customer-reported defects.
+  - question: how-turnover-affects-quality
+    law: turnover-quality-effect
+    relation: tests
+    finding: refutes
+    methods: [mining-software-repositories, case-study]
+    context: { setting: industrial, participants: professionals, domain: software }
+    propositions: [newcomers-defects]
+    note: In the same organization, the arrival of new developers was not associated with an increase in defects.
